@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mentor-Mentee Eşleştirme Algoritması — Detaylı Rapor</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+  :root {
+    --bg:        #0d1117;
+    --bg-card:   #161b22;
+    --bg-card2:  #1c2333;
+    --border:    #30363d;
+    --text:      #e6edf3;
+    --text-dim:  #8b949e;
+    --text-muted:#6e7681;
+    --blue:      #58a6ff;
+    --blue-bg:   #1f3d5c;
+    --green:     #3fb950;
+    --green-bg:  #1a3326;
+    --amber:     #d29922;
+    --amber-bg:  #3b2d0e;
+    --red:       #f85149;
+    --red-bg:    #3d1a1a;
+    --purple:    #bc8cff;
+    --purple-bg: #2d1f4e;
+    --cyan:      #39d2c0;
+    --cyan-bg:   #153331;
+    --pink:      #f778ba;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', -apple-system, sans-serif;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ─── Navigation ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(13,17,23,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 32px;
+    display: flex; align-items: center; height: 56px; gap: 24px;
+  }
+  nav .logo { font-weight: 800; font-size: 15px; color: var(--blue); letter-spacing: -0.5px; white-space: nowrap; }
+  nav a {
+    color: var(--text-dim); text-decoration: none; font-size: 13px; font-weight: 500;
+    padding: 6px 12px; border-radius: 6px; transition: all 0.2s;
+  }
+  nav a:hover { color: var(--text); background: rgba(255,255,255,0.06); }
+
+  /* ─── Container ─── */
+  .container { max-width: 1080px; margin: 0 auto; padding: 80px 24px 60px; }
+
+  /* ─── Hero ─── */
+  .hero {
+    text-align: center; padding: 48px 0 40px;
+    background: linear-gradient(135deg, rgba(88,166,255,0.08) 0%, rgba(188,140,255,0.06) 100%);
+    border: 1px solid var(--border); border-radius: 16px; margin-bottom: 40px;
+  }
+  .hero h1 { font-size: 32px; font-weight: 800; letter-spacing: -0.8px; margin-bottom: 8px; }
+  .hero h1 span { background: linear-gradient(135deg, var(--blue), var(--purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .hero p { color: var(--text-dim); font-size: 15px; max-width: 560px; margin: 0 auto; }
+  .hero-stats { display: flex; justify-content: center; gap: 32px; margin-top: 28px; flex-wrap: wrap; }
+  .hero-stat { text-align: center; }
+  .hero-stat .num { font-size: 28px; font-weight: 800; }
+  .hero-stat .label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; }
+  .c-blue { color: var(--blue); } .c-green { color: var(--green); } .c-amber { color: var(--amber); } .c-purple { color: var(--purple); } .c-red { color: var(--red); } .c-cyan { color: var(--cyan); }
+
+  /* ─── Section ─── */
+  .section { margin-bottom: 48px; }
+  .section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+  .step-num {
+    width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 15px; flex-shrink: 0;
+  }
+  .step-blue   { background: var(--blue-bg); color: var(--blue); border: 1px solid rgba(88,166,255,0.3); }
+  .step-green  { background: var(--green-bg); color: var(--green); border: 1px solid rgba(63,185,80,0.3); }
+  .step-amber  { background: var(--amber-bg); color: var(--amber); border: 1px solid rgba(210,153,34,0.3); }
+  .step-purple { background: var(--purple-bg); color: var(--purple); border: 1px solid rgba(188,140,255,0.3); }
+  .step-cyan   { background: var(--cyan-bg); color: var(--cyan); border: 1px solid rgba(57,210,192,0.3); }
+  .step-red    { background: var(--red-bg); color: var(--red); border: 1px solid rgba(248,81,73,0.3); }
+
+  .section-header h2 { font-size: 20px; font-weight: 700; letter-spacing: -0.3px; }
+  .section-header p { color: var(--text-dim); font-size: 13px; margin-top: 2px; }
+
+  /* ─── Cards ─── */
+  .card {
+    background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px;
+    padding: 24px; margin-bottom: 16px;
+  }
+  .card h3 { font-size: 15px; font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+
+  /* ─── Flowchart ─── */
+  .flow { display: flex; flex-direction: column; align-items: center; gap: 0; padding: 20px 0; }
+  .flow-node {
+    padding: 14px 28px; border-radius: 10px; font-size: 13px; font-weight: 600;
+    text-align: center; min-width: 260px; max-width: 420px; position: relative;
+  }
+  .flow-start    { background: var(--blue-bg); color: var(--blue); border: 1.5px solid rgba(88,166,255,0.4); border-radius: 24px; }
+  .flow-process  { background: var(--bg-card2); color: var(--text); border: 1.5px solid var(--border); }
+  .flow-decision { background: var(--amber-bg); color: var(--amber); border: 1.5px solid rgba(210,153,34,0.4); transform: none; clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%); padding: 32px 48px; }
+  .flow-decision-box { background: var(--amber-bg); color: var(--amber); border: 1.5px solid rgba(210,153,34,0.4); border-radius: 10px; }
+  .flow-success  { background: var(--green-bg); color: var(--green); border: 1.5px solid rgba(63,185,80,0.4); }
+  .flow-danger   { background: var(--red-bg); color: var(--red); border: 1.5px solid rgba(248,81,73,0.4); }
+  .flow-end      { background: var(--purple-bg); color: var(--purple); border: 1.5px solid rgba(188,140,255,0.4); border-radius: 24px; }
+
+  .flow-arrow {
+    width: 2px; height: 28px; background: var(--border); position: relative;
+  }
+  .flow-arrow::after {
+    content: ''; position: absolute; bottom: -4px; left: -4px;
+    border-left: 5px solid transparent; border-right: 5px solid transparent;
+    border-top: 6px solid var(--border);
+  }
+  .flow-label { font-size: 11px; color: var(--text-muted); padding: 2px 8px; }
+
+  .flow-branch { display: flex; gap: 24px; align-items: flex-start; justify-content: center; width: 100%; }
+  .flow-branch-col { display: flex; flex-direction: column; align-items: center; gap: 0; }
+
+  /* ─── Table ─── */
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th {
+    background: var(--bg-card2); color: var(--text-dim); font-weight: 600; font-size: 11px;
+    text-transform: uppercase; letter-spacing: 0.8px; padding: 10px 14px; text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+  td { padding: 10px 14px; border-bottom: 1px solid rgba(48,54,61,0.5); vertical-align: top; }
+  tr:hover td { background: rgba(255,255,255,0.02); }
+  .mono { font-family: 'JetBrains Mono', monospace; font-size: 12px; }
+
+  /* ─── Score Bar ─── */
+  .score-bar { display: flex; align-items: center; gap: 8px; }
+  .score-bar-track { flex: 1; height: 8px; background: var(--bg); border-radius: 4px; overflow: hidden; }
+  .score-bar-fill { height: 100%; border-radius: 4px; transition: width 0.3s; }
+  .score-bar-label { font-size: 12px; font-weight: 700; min-width: 32px; text-align: right; }
+
+  /* ─── Badge ─── */
+  .badge {
+    display: inline-block; padding: 3px 10px; border-radius: 20px;
+    font-size: 11px; font-weight: 600; letter-spacing: 0.3px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .b-blue   { background: var(--blue-bg); color: var(--blue); border: 1px solid rgba(88,166,255,0.3); }
+  .b-green  { background: var(--green-bg); color: var(--green); border: 1px solid rgba(63,185,80,0.3); }
+  .b-amber  { background: var(--amber-bg); color: var(--amber); border: 1px solid rgba(210,153,34,0.3); }
+  .b-red    { background: var(--red-bg); color: var(--red); border: 1px solid rgba(248,81,73,0.3); }
+  .b-purple { background: var(--purple-bg); color: var(--purple); border: 1px solid rgba(188,140,255,0.3); }
+
+  /* ─── Code Block ─── */
+  .code {
+    background: var(--bg); border: 1px solid var(--border); border-radius: 8px;
+    padding: 16px 20px; font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    line-height: 1.7; overflow-x: auto; color: var(--text-dim);
+  }
+  .code .kw { color: var(--purple); } .code .fn { color: var(--blue); }
+  .code .str { color: var(--green); } .code .num { color: var(--amber); }
+  .code .cm { color: var(--text-muted); font-style: italic; }
+
+  /* ─── Grid Layouts ─── */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  @media (max-width: 768px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } }
+
+  /* ─── ER Diagram ─── */
+  .er-diagram { display: flex; justify-content: center; align-items: flex-start; gap: 60px; padding: 28px 0; flex-wrap: wrap; }
+  .er-entity {
+    background: var(--bg-card2); border: 1.5px solid var(--border); border-radius: 12px;
+    min-width: 220px; overflow: hidden;
+  }
+  .er-entity-name {
+    padding: 10px 16px; font-weight: 700; font-size: 13px; text-align: center;
+    border-bottom: 1px solid var(--border);
+  }
+  .er-entity ul { list-style: none; padding: 10px 16px; }
+  .er-entity li { font-size: 12px; padding: 3px 0; font-family: 'JetBrains Mono', monospace; color: var(--text-dim); }
+  .er-entity li .pk { color: var(--amber); font-weight: 600; }
+  .er-entity li .fk { color: var(--purple); }
+
+  .er-rel {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    min-height: 120px; color: var(--text-muted); font-size: 12px;
+  }
+  .er-line { width: 60px; height: 2px; background: var(--border); margin: 6px 0; }
+
+  /* ─── Scoring Visual ─── */
+  .criteria-card {
+    background: var(--bg-card2); border: 1px solid var(--border); border-radius: 10px;
+    padding: 16px; text-align: center;
+  }
+  .criteria-card .icon { font-size: 28px; margin-bottom: 8px; }
+  .criteria-card .name { font-weight: 700; font-size: 13px; margin-bottom: 4px; }
+  .criteria-card .weight { font-size: 22px; font-weight: 800; }
+  .criteria-card .wlabel { font-size: 11px; color: var(--text-muted); }
+  .criteria-card .detail { font-size: 11px; color: var(--text-dim); margin-top: 8px; line-height: 1.5; }
+
+  /* ─── Pipeline Diagram ─── */
+  .pipeline { display: flex; align-items: center; gap: 4px; padding: 20px 0; overflow-x: auto; justify-content: center; flex-wrap: wrap; }
+  .pipe-stage {
+    padding: 12px 20px; border-radius: 10px; font-size: 12px; font-weight: 600;
+    text-align: center; min-width: 120px; position: relative;
+  }
+  .pipe-arrow { color: var(--text-muted); font-size: 18px; flex-shrink: 0; }
+
+  /* ─── Tooltip ─── */
+  .info {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 16px; height: 16px; border-radius: 50%; font-size: 10px; font-weight: 700;
+    background: var(--blue-bg); color: var(--blue); cursor: help; margin-left: 4px;
+  }
+
+  /* ─── Connector Lines (SVG) ─── */
+  .connector { stroke: var(--border); stroke-width: 2; fill: none; }
+  .connector-arrow { fill: var(--border); }
+
+  /* ─── Separator ─── */
+  hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+
+  /* ─── Formula ─── */
+  .formula {
+    background: var(--bg); border: 1px solid var(--border); border-radius: 10px;
+    padding: 20px 24px; text-align: center; font-family: 'JetBrains Mono', monospace;
+    font-size: 14px; line-height: 2; color: var(--text);
+  }
+  .formula .var { color: var(--blue); font-weight: 600; }
+  .formula .op  { color: var(--text-muted); }
+  .formula .val { color: var(--amber); font-weight: 600; }
+  .formula .comment { color: var(--text-muted); font-size: 11px; display: block; margin-top: 4px; }
+
+  /* ─── Legend ─── */
+  .legend { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 12px; }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--text-dim); }
+  .legend-dot { width: 10px; height: 10px; border-radius: 3px; }
+
+  /* Smooth reveal */
+  .section { opacity: 0; transform: translateY(16px); animation: fadeUp 0.5s forwards; }
+  .section:nth-child(2) { animation-delay: 0.05s; }
+  .section:nth-child(3) { animation-delay: 0.1s; }
+  .section:nth-child(4) { animation-delay: 0.15s; }
+  .section:nth-child(5) { animation-delay: 0.2s; }
+  .section:nth-child(6) { animation-delay: 0.25s; }
+  .section:nth-child(7) { animation-delay: 0.3s; }
+  .section:nth-child(8) { animation-delay: 0.35s; }
+  @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════ NAVIGATION ═══════════════════════════ -->
+<nav>
+  <span class="logo">&#9670; Mentor-Mentee Algoritması</span>
+  <a href="#overview">Genel Bakış</a>
+  <a href="#step1">Veri Yükleme</a>
+  <a href="#step2">Ön İşleme</a>
+  <a href="#step3">Puanlama</a>
+  <a href="#step4">Eşleştirme</a>
+  <a href="#step5">Çıktı</a>
+  <a href="#results">Sonuçlar</a>
+</nav>
+
+<div class="container">
+
+<!-- ═══════════════════════════ HERO ═══════════════════════════ -->
+<div class="hero section">
+  <h1><span>Mentor-Mentee Eşleştirme</span><br>Algoritma Raporu 2026</h1>
+  <p>Bu rapor, eşleştirme algoritmasının her adımını görsel destekli tablolar ve diyagramlarla açıklamaktadır.</p>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="num c-blue">308</div><div class="label">Toplam Mentee</div></div>
+    <div class="hero-stat"><div class="num c-purple">225</div><div class="label">Mentor</div></div>
+    <div class="hero-stat"><div class="num c-green">227</div><div class="label">Yeni Eşleşme</div></div>
+    <div class="hero-stat"><div class="num c-amber">81</div><div class="label">Mevcut Eşleşme</div></div>
+    <div class="hero-stat"><div class="num c-cyan">0</div><div class="label">Eşleşmeyen</div></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ PIPELINE OVERVIEW ═══════════════════════════ -->
+<div class="section" id="overview">
+  <div class="section-header">
+    <div class="step-num step-blue">&#9672;</div>
+    <div><h2>Algoritma Akış Diyagramı</h2><p>Baştan sona 6 ana aşama</p></div>
+  </div>
+
+  <div class="pipeline">
+    <div class="pipe-stage flow-start">&#128196; Excel<br>Veri Yükleme</div>
+    <div class="pipe-arrow">&#10142;</div>
+    <div class="pipe-stage flow-process">&#128295; Ön İşleme<br>&amp; Temizleme</div>
+    <div class="pipe-arrow">&#10142;</div>
+    <div class="pipe-stage flow-decision-box">&#9888;&#65039; Blok<br>Kontrolleri</div>
+    <div class="pipe-arrow">&#10142;</div>
+    <div class="pipe-stage" style="background:var(--cyan-bg);color:var(--cyan);border:1.5px solid rgba(57,210,192,0.4)">&#127919; Puanlama<br>(0-100)</div>
+    <div class="pipe-arrow">&#10142;</div>
+    <div class="pipe-stage flow-success">&#129309; Greedy<br>Eşleştirme</div>
+    <div class="pipe-arrow">&#10142;</div>
+    <div class="pipe-stage flow-end">&#128202; Excel<br>Rapor Çıktısı</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ STEP 1: DATA LOADING ═══════════════════════════ -->
+<div class="section" id="step1">
+  <div class="section-header">
+    <div class="step-num step-blue">1</div>
+    <div><h2>Veri Yükleme</h2><p>Excel dosyasından 3 sayfa okunuyor</p></div>
+  </div>
+
+  <div class="card">
+    <h3>&#128196; Veri Kaynağı: <span style="color:var(--blue)">Mentor Mezun Ağı 2026 Başvurular.xlsx</span></h3>
+    <div class="er-diagram">
+      <!-- Mentee Entity -->
+      <div class="er-entity" style="border-color: var(--blue);">
+        <div class="er-entity-name" style="background:var(--blue-bg); color:var(--blue);">MENTEE SAYFASI</div>
+        <ul>
+          <li><span class="pk">&#9670; Ad Soyad</span></li>
+          <li><span class="pk">&#9670; Öğrenci No</span></li>
+          <li>Şehir</li>
+          <li>Bölüm</li>
+          <li>Kariyer Hedefi</li>
+          <li>Tercih Edilen Mentor Açıklaması</li>
+          <li>Destek Konuları</li>
+          <li>Önem Puanları (Bölüm/Sektör/Şehir/İlgi)</li>
+          <li>Eski Mentor Adı</li>
+          <li>Eşleşme Durumu</li>
+        </ul>
+      </div>
+
+      <!-- Relationship -->
+      <div class="er-rel">
+        <div style="font-size:11px;color:var(--amber)">N : 1</div>
+        <div class="er-line"></div>
+        <div style="font-size:20px">&#128279;</div>
+        <div class="er-line"></div>
+        <div style="font-size:11px;color:var(--amber)">eşleştirilir</div>
+      </div>
+
+      <!-- Mentor Entity -->
+      <div class="er-entity" style="border-color: var(--green);">
+        <div class="er-entity-name" style="background:var(--green-bg); color:var(--green);">MENTOR SAYFASI</div>
+        <ul>
+          <li><span class="pk">&#9670; Ad Soyad</span></li>
+          <li>Şehir</li>
+          <li>Hobiler</li>
+          <li>Mezuniyet Yılı</li>
+          <li>KU Bölümü</li>
+          <li>Sektör</li>
+          <li>Pozisyon</li>
+          <li>Uzmanlık Alanları</li>
+          <li>Destek Alanları</li>
+          <li><span class="fk">&#9826; Kapasite (max mentee)</span></li>
+          <li>Mevcut Mentee Slotları (×3)</li>
+        </ul>
+      </div>
+
+      <!-- Relationship -->
+      <div class="er-rel">
+        <div style="font-size:11px;color:var(--amber)">geçmiş</div>
+        <div class="er-line"></div>
+        <div style="font-size:20px">&#128197;</div>
+        <div class="er-line"></div>
+        <div style="font-size:11px;color:var(--amber)">tekrar engeli</div>
+      </div>
+
+      <!-- History Entity -->
+      <div class="er-entity" style="border-color: var(--amber);">
+        <div class="er-entity-name" style="background:var(--amber-bg); color:var(--amber);">SON 3 YIL EŞLEŞME</div>
+        <ul>
+          <li><span class="pk">&#9670; ID</span></li>
+          <li>Mentee Adı</li>
+          <li>Mentor Adı</li>
+          <li>Yıl</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-3">
+    <div class="card" style="text-align:center; border-top: 3px solid var(--blue);">
+      <div style="font-size:32px;font-weight:800;color:var(--blue)">308</div>
+      <div style="font-size:12px;color:var(--text-dim);margin-top:4px">Mentee Kaydı</div>
+      <div style="font-size:11px;color:var(--text-muted);margin-top:4px">81'i önceden eşleşmiş</div>
+    </div>
+    <div class="card" style="text-align:center; border-top: 3px solid var(--green);">
+      <div style="font-size:32px;font-weight:800;color:var(--green)">225</div>
+      <div style="font-size:12px;color:var(--text-dim);margin-top:4px">Mentor Kaydı</div>
+      <div style="font-size:11px;color:var(--text-muted);margin-top:4px">Toplam 311 boş kapasite</div>
+    </div>
+    <div class="card" style="text-align:center; border-top: 3px solid var(--amber);">
+      <div style="font-size:32px;font-weight:800;color:var(--amber)">?</div>
+      <div style="font-size:12px;color:var(--text-dim);margin-top:4px">Geçmiş Eşleşme</div>
+      <div style="font-size:11px;color:var(--text-muted);margin-top:4px">Son 3 yıl tekrar engeli</div>
+    </div>
+  </div>
+</div>
+
+<hr>
+
+<!-- ═══════════════════════════ STEP 2: PREPROCESSING ═══════════════════════════ -->
+<div class="section" id="step2">
+  <div class="section-header">
+    <div class="step-num step-green">2</div>
+    <div><h2>Ön İşleme &amp; Hazırlık</h2><p>Veriler temizlenir, kapasite hesaplanır, blok listeleri oluşturulur</p></div>
+  </div>
+
+  <div class="card">
+    <h3>&#128295; Yardımcı Fonksiyonlar</h3>
+    <table>
+      <thead>
+        <tr><th>Fonksiyon</th><th>Girdisi</th><th>Çıktısı</th><th>Açıklama</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="mono" style="color:var(--blue)">clean(s)</td>
+          <td>Herhangi bir metin</td>
+          <td class="mono">"istanbul"</td>
+          <td>Küçük harfe çevirir, boşlukları kırpar, NaN kontrol eder</td>
+        </tr>
+        <tr>
+          <td class="mono" style="color:var(--blue)">parse_score(val)</td>
+          <td class="mono">"3 - Orta düzeyde önemli"</td>
+          <td class="mono">3</td>
+          <td>Önem puanını (1-5) çıkarır, varsayılan: 3</td>
+        </tr>
+        <tr>
+          <td class="mono" style="color:var(--blue)">parse_capacity(val)</td>
+          <td class="mono">"3" veya "tüm..."</td>
+          <td class="mono">3 veya 5</td>
+          <td>Mentor kapasitesini sayıya çevirir, varsayılan: 2</td>
+        </tr>
+        <tr>
+          <td class="mono" style="color:var(--blue)">text_overlap(a, b)</td>
+          <td>İki metin</td>
+          <td class="mono">0.0 – 1.0</td>
+          <td>Kelime bazlı örtüşme oranı: <span class="mono">|A∩B| / max(|A|,|B|)</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <h3>&#128274; Kapasite Hesaplama</h3>
+      <div class="flow">
+        <div class="flow-node flow-process" style="font-size:12px">Her mentor satırı için:</div>
+        <div class="flow-arrow"></div>
+        <div class="flow-node flow-process" style="font-size:12px"><strong>kapasite</strong> = parse_capacity(T_CAPACITY)</div>
+        <div class="flow-arrow"></div>
+        <div class="flow-node flow-process" style="font-size:12px"><strong>dolu_slot</strong> = Sütun 24, 26, 28'deki<br>dolu mentee isimleri sayısı</div>
+        <div class="flow-arrow"></div>
+        <div class="flow-node flow-success" style="font-size:12px"><strong>kalan</strong> = max(0, kapasite − dolu_slot)</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>&#128683; Blok Listeleri</h3>
+      <div style="margin-top:8px">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+          <span class="badge b-red">BLOK 1</span>
+          <span style="font-size:13px">Eski mentor tekrarı</span>
+        </div>
+        <div class="code" style="margin-bottom:12px;font-size:11px">
+          <span class="cm">// Mentee'nin M_OLD_MENTOR sütunu mentor adıyla eşleşirse → -999 puan</span><br>
+          <span class="kw">if</span> old_mentor == mr_name: <span class="kw">return</span> <span class="num">-999</span>
+        </div>
+
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+          <span class="badge b-red">BLOK 2</span>
+          <span style="font-size:13px">Geçmiş 3 yıl tekrar</span>
+        </div>
+        <div class="code" style="font-size:11px">
+          <span class="cm">// "Son 3 yıl eşleşme" sayfasında (mentee, mentor) çifti varsa → -999</span><br>
+          <span class="kw">if</span> (me_name, mr_name) <span class="kw">in</span> historical_pairs: <span class="kw">return</span> <span class="num">-999</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>&#128203; Mentee Filtreleme</h3>
+    <div class="flow" style="flex-direction:row; gap:20px; flex-wrap:wrap; justify-content:center">
+      <div class="flow-node flow-process" style="min-width:150px">308 Toplam<br>Mentee</div>
+      <div class="pipe-arrow" style="font-size:24px">&#10142;</div>
+      <div class="flow-node flow-decision-box" style="min-width:180px">M_MATCHED sütunu<br>boş mu?</div>
+      <div class="pipe-arrow" style="font-size:24px">&#10142;</div>
+      <div class="flow-node flow-success" style="min-width:160px"><strong>227</strong> Mentee<br>eşleşme bekliyor</div>
+      <div style="display:flex;flex-direction:column;align-items:center">
+        <div class="flow-label">Dolu ise →</div>
+        <div class="flow-node flow-process" style="min-width:140px;background:var(--green-bg);color:var(--green)"><strong>81</strong> Mentee<br>zaten eşleşmiş</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr>
+
+<!-- ═══════════════════════════ STEP 3: SCORING ═══════════════════════════ -->
+<div class="section" id="step3">
+  <div class="section-header">
+    <div class="step-num step-cyan">3</div>
+    <div><h2>Puanlama Sistemi</h2><p>Her mentee-mentor çifti için 0-100 arası puan hesaplanır</p></div>
+  </div>
+
+  <div class="card">
+    <h3>&#127919; Toplam Puan Formülü</h3>
+    <div class="formula">
+      <span class="var">Puan</span> <span class="op">=</span>
+      (<span class="var">w<sub>sec</sub></span>/<span class="var">W</span>) × <span class="val">35</span> × sektör_skoru
+      <span class="op">+</span>
+      (<span class="var">w<sub>dept</sub></span>/<span class="var">W</span>) × <span class="val">30</span> × bölüm_skoru
+      <span class="op">+</span>
+      (<span class="var">w<sub>city</sub></span>/<span class="var">W</span>) × <span class="val">15</span> × şehir_skoru
+      <span class="op">+</span>
+      (<span class="var">w<sub>int</sub></span>/<span class="var">W</span>) × <span class="val">10</span> × ilgi_skoru
+      <span class="op">+</span>
+      <span class="val">10</span> × destek_skoru
+      <span class="comment">W = w<sub>sec</sub> + w<sub>dept</sub> + w<sub>city</sub> + w<sub>int</sub> &nbsp; (mentee'nin kendi önem ağırlıkları, 1-5 arası)</span>
+    </div>
+  </div>
+
+  <div style="display:grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-top: 16px;">
+    <!-- Criterion 1 -->
+    <div class="criteria-card" style="border-top: 3px solid var(--blue);">
+      <div class="icon">&#127981;</div>
+      <div class="name">Sektör Eşleşmesi</div>
+      <div class="weight c-blue">35</div>
+      <div class="wlabel">maks puan</div>
+      <div class="detail">Mentee kariyer hedefi vs.<br>Mentor sektör + uzmanlık<br><span class="mono" style="color:var(--blue)">text_overlap()</span></div>
+    </div>
+    <!-- Criterion 2 -->
+    <div class="criteria-card" style="border-top: 3px solid var(--purple);">
+      <div class="icon">&#127891;</div>
+      <div class="name">Bölüm Eşleşmesi</div>
+      <div class="weight c-purple">30</div>
+      <div class="wlabel">maks puan</div>
+      <div class="detail">Mentee bölümü vs.<br>Mentor KU bölümü<br>+ tercih metni kontrolü</div>
+    </div>
+    <!-- Criterion 3 -->
+    <div class="criteria-card" style="border-top: 3px solid var(--green);">
+      <div class="icon">&#127961;</div>
+      <div class="name">Şehir Eşleşmesi</div>
+      <div class="weight c-green">15</div>
+      <div class="wlabel">maks puan</div>
+      <div class="detail">Tam eşleşme → 1.0<br>İlk kelime eşleşme → 0.8<br>İstanbul özel → 1.0</div>
+    </div>
+    <!-- Criterion 4 -->
+    <div class="criteria-card" style="border-top: 3px solid var(--amber);">
+      <div class="icon">&#128161;</div>
+      <div class="name">İlgi Alanı</div>
+      <div class="weight c-amber">10</div>
+      <div class="wlabel">maks puan</div>
+      <div class="detail">Mentee tercih + destek vs.<br>Mentor hobi + destek<br>alanları karşılaştırması</div>
+    </div>
+    <!-- Criterion 5 -->
+    <div class="criteria-card" style="border-top: 3px solid var(--cyan);">
+      <div class="icon">&#129309;</div>
+      <div class="name">Destek Konusu</div>
+      <div class="weight c-cyan">10</div>
+      <div class="wlabel">sabit puan</div>
+      <div class="detail">Mentee destek isteği vs.<br>Mentor destek alanları<br><strong>Ağırlıksız</strong> — sabit katsayı</div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <h3>&#128290; Ağırlık Mekanizması</h3>
+    <p style="font-size:13px;color:var(--text-dim);margin-bottom:16px">
+      Her mentee, başvuru formunda 4 kritere <strong>1-5 arası önem puanı</strong> verir.
+      Bu puanlar, kriter ağırlıklarını kişiselleştirir.
+    </p>
+    <table>
+      <thead>
+        <tr><th>Mentee Puanı</th><th>Anlamı</th><th>Etki</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="badge b-green">5</span></td>
+          <td>Çok önemli</td>
+          <td>İlgili kriterin ağırlığı artırılır (w/W oranı yükselir)</td>
+        </tr>
+        <tr>
+          <td><span class="badge b-amber">3</span></td>
+          <td>Orta düzey</td>
+          <td>Nötr etki — tüm kriterler dengeli</td>
+        </tr>
+        <tr>
+          <td><span class="badge b-red">1</span></td>
+          <td>Önemsiz</td>
+          <td>İlgili kriterin ağırlığı azalır, diğerleri artar</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div style="margin-top:16px; padding:16px; background:var(--bg); border-radius:8px; border:1px solid var(--border)">
+      <div style="font-size:12px;font-weight:700;margin-bottom:8px;color:var(--text-dim)">ÖRNEK: Sektörü çok önemseyen Mentee</div>
+      <div style="font-size:12px; color:var(--text-dim); line-height:1.8">
+        w<sub>dept</sub> = 2, w<sub>sec</sub> = <strong style="color:var(--amber)">5</strong>, w<sub>city</sub> = 1, w<sub>int</sub> = 3 → W = 11<br>
+        Sektör ağırlığı: (5/11) × 35 = <strong style="color:var(--green)">15.9 puan</strong> potansiyeli<br>
+        Bölüm ağırlığı: (2/11) × 30 = <strong style="color:var(--text-muted)">5.5 puan</strong> potansiyeli<br>
+        <span style="color:var(--text-muted)">→ Sektör eşleşmesi 3× daha etkili hale gelir</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>&#128270; text_overlap() Detaylı Çalışma Şekli</h3>
+    <div class="grid-2">
+      <div>
+        <div class="code" style="font-size:11px">
+          <span class="fn">text_overlap</span>(<span class="str">"finans bankacılık yatırım"</span>,<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"bankacılık ve finans sektörü"</span>)<br><br>
+          A = {<span class="str">finans</span>, <span class="str">bankacılık</span>, <span class="str">yatırım</span>} → |A| = <span class="num">3</span><br>
+          B = {<span class="str">bankacılık</span>, <span class="str">ve</span>, <span class="str">finans</span>, <span class="str">sektörü</span>} → |B| = <span class="num">4</span><br>
+          A ∩ B = {<span class="str">finans</span>, <span class="str">bankacılık</span>} → <span class="num">2</span><br><br>
+          Skor = <span class="num">2</span> / max(<span class="num">3</span>, <span class="num">4</span>) = <span class="num" style="font-weight:700">0.50</span>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;justify-content:center;">
+        <svg viewBox="0 0 260 160" style="width:100%;max-width:260px">
+          <circle cx="100" cy="80" r="60" fill="rgba(88,166,255,0.15)" stroke="var(--blue)" stroke-width="1.5"/>
+          <circle cx="170" cy="80" r="60" fill="rgba(63,185,80,0.15)" stroke="var(--green)" stroke-width="1.5"/>
+          <text x="70" y="70" fill="var(--blue)" font-size="10" font-family="JetBrains Mono">yatırım</text>
+          <text x="118" y="65" fill="var(--amber)" font-size="10" font-weight="700" font-family="JetBrains Mono">finans</text>
+          <text x="108" y="85" fill="var(--amber)" font-size="10" font-weight="700" font-family="JetBrains Mono">bankacılık</text>
+          <text x="174" y="70" fill="var(--green)" font-size="10" font-family="JetBrains Mono">ve</text>
+          <text x="170" y="90" fill="var(--green)" font-size="10" font-family="JetBrains Mono">sektörü</text>
+          <text x="65" y="155" fill="var(--blue)" font-size="10">Mentee A</text>
+          <text x="165" y="155" fill="var(--green)" font-size="10">Mentor B</text>
+          <text x="110" y="110" fill="var(--amber)" font-size="11" font-weight="700">∩ = 2</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr>
+
+<!-- ═══════════════════════════ STEP 4: MATCHING ALGORITHM ═══════════════════════════ -->
+<div class="section" id="step4">
+  <div class="section-header">
+    <div class="step-num step-green">4</div>
+    <div><h2>Greedy Eşleştirme Algoritması</h2><p>Açgözlü yöntemle sıralı eşleştirme yapılır</p></div>
+  </div>
+
+  <div class="card">
+    <h3>&#128736; Ana Akış Diyagramı</h3>
+    <div class="flow">
+      <div class="flow-node flow-start">Başla: 227 eşleşmemiş mentee</div>
+      <div class="flow-arrow"></div>
+
+      <div class="flow-node flow-process">
+        <strong>Menteeleri sırala</strong><br>
+        <span style="font-size:11px;color:var(--text-dim)">Yüksek "seçicilik" puanı → önce eşleştirilir<br>
+        seçicilik = w_dept + w_sec + w_city + w_int</span>
+      </div>
+      <div class="flow-arrow"></div>
+
+      <div class="flow-node flow-process" style="background:var(--purple-bg);color:var(--purple);border-color:rgba(188,140,255,0.4)">
+        <strong>&#128257; Her mentee için döngü başlat</strong>
+      </div>
+      <div class="flow-arrow"></div>
+
+      <div class="flow-node flow-process">
+        <strong>Tüm mentorları puanla</strong><br>
+        <span style="font-size:11px;color:var(--text-dim)">Sadece kapasitesi kalan mentorlar<br>
+        score_pair(mentee, mentor) → 0~100</span>
+      </div>
+      <div class="flow-arrow"></div>
+
+      <div class="flow-node flow-decision-box">
+        Aday var mı?<br>
+        <span style="font-size:10px">(puan > -900 ve kapasite > 0)</span>
+      </div>
+      <div class="flow-arrow"></div>
+
+      <div class="flow-branch">
+        <div class="flow-branch-col">
+          <div class="flow-label" style="color:var(--green)">&#10003; Evet</div>
+          <div class="flow-arrow"></div>
+          <div class="flow-node flow-success">
+            <strong>En yüksek puanlı mentoru seç</strong><br>
+            <span style="font-size:11px">Kapasitesini 1 azalt</span>
+          </div>
+          <div class="flow-arrow"></div>
+          <div class="flow-node flow-process" style="font-size:12px">
+            Sonuç listesine ekle<br>
+            <span style="font-size:11px;color:var(--text-dim)">+Top 3 alternatifi kaydet</span>
+          </div>
+        </div>
+        <div class="flow-branch-col">
+          <div class="flow-label" style="color:var(--red)">&#10007; Hayır</div>
+          <div class="flow-arrow"></div>
+          <div class="flow-node flow-danger">
+            Eşleştirilemeyen<br>listesine ekle
+          </div>
+        </div>
+      </div>
+      <div class="flow-arrow"></div>
+
+      <div class="flow-node flow-process" style="background:var(--purple-bg);color:var(--purple);border-color:rgba(188,140,255,0.4)">
+        &#128257; Sonraki mentee'ye geç
+      </div>
+      <div class="flow-arrow"></div>
+
+      <div class="flow-node flow-end">Tüm menteeler işlendi → Sonuç: 227 eşleşme, 0 eşleşmeyen</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>&#128161; Neden Greedy (Açgözlü) Algoritma?</h3>
+    <div class="grid-2" style="margin-top:8px">
+      <div>
+        <table>
+          <thead><tr><th>Özellik</th><th>Greedy</th><th>Optimal (Hungarian vb.)</th></tr></thead>
+          <tbody>
+            <tr><td>Zaman karmaşıklığı</td><td class="mono" style="color:var(--green)">O(N×M)</td><td class="mono" style="color:var(--red)">O(N³)</td></tr>
+            <tr><td>227 mentee × 225 mentor</td><td style="color:var(--green)">~51K işlem</td><td style="color:var(--red)">~11.7M işlem</td></tr>
+            <tr><td>Sonuç kalitesi</td><td>İyi (lokalde en iyi)</td><td>Optimal (global en iyi)</td></tr>
+            <tr><td>Anlaşılabilirlik</td><td style="color:var(--green)">Yüksek</td><td style="color:var(--amber)">Orta</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="padding:16px;font-size:13px;color:var(--text-dim);line-height:1.7">
+        <strong style="color:var(--text)">Seçicilik Sıralaması</strong> greedy yaklaşımın kalitesini artırır:
+        <ul style="margin-top:8px;padding-left:20px">
+          <li>Daha seçici menteeler (yüksek önem puanları) <strong>önce</strong> eşleştirilir</li>
+          <li>Bu kişiler için en iyi mentor henüz müsaitken atanır</li>
+          <li>Daha esnek menteeler, kalan mentorlerden yine iyi eşleşme bulabilir</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr>
+
+<!-- ═══════════════════════════ STEP 5: OUTPUT ═══════════════════════════ -->
+<div class="section" id="step5">
+  <div class="section-header">
+    <div class="step-num step-purple">5</div>
+    <div><h2>Excel Çıktı Yapısı</h2><p>Biçimlendirilmiş 5 sayfalık rapor oluşturulur</p></div>
+  </div>
+
+  <div style="display:grid; grid-template-columns: repeat(5, 1fr); gap: 10px;">
+    <div class="card" style="text-align:center;padding:16px;border-top:3px solid var(--blue)">
+      <div style="font-size:24px">&#128279;</div>
+      <div style="font-size:12px;font-weight:700;margin-top:6px">Yeni Eşleşmeler</div>
+      <div style="font-size:10px;color:var(--text-muted);margin-top:4px">227 satır<br>12 sütun<br>Puan renk kodlu</div>
+    </div>
+    <div class="card" style="text-align:center;padding:16px;border-top:3px solid var(--green)">
+      <div style="font-size:24px">&#9989;</div>
+      <div style="font-size:12px;font-weight:700;margin-top:6px">Mevcut Eşleşmeler</div>
+      <div style="font-size:10px;color:var(--text-muted);margin-top:4px">81 satır<br>Önceden atanmış</div>
+    </div>
+    <div class="card" style="text-align:center;padding:16px;border-top:3px solid var(--red)">
+      <div style="font-size:24px">&#9888;&#65039;</div>
+      <div style="font-size:12px;font-weight:700;margin-top:6px">Eşleştirilemeyen</div>
+      <div style="font-size:10px;color:var(--text-muted);margin-top:4px">0 satır<br>Tümü eşleşti!</div>
+    </div>
+    <div class="card" style="text-align:center;padding:16px;border-top:3px solid var(--amber)">
+      <div style="font-size:24px">&#128202;</div>
+      <div style="font-size:12px;font-weight:700;margin-top:6px">Mentor Yük Özeti</div>
+      <div style="font-size:10px;color:var(--text-muted);margin-top:4px">225 mentor<br>Kapasite/doluluk</div>
+    </div>
+    <div class="card" style="text-align:center;padding:16px;border-top:3px solid var(--cyan)">
+      <div style="font-size:24px">&#128200;</div>
+      <div style="font-size:12px;font-weight:700;margin-top:6px">Özet İstatistik</div>
+      <div style="font-size:10px;color:var(--text-muted);margin-top:4px">Puan dağılımı<br>Genel özet</div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <h3>&#127912; Puan Renk Kodlaması</h3>
+    <div class="legend" style="margin-top:4px;margin-bottom:16px">
+      <div class="legend-item"><div class="legend-dot" style="background:#3fb950"></div> Yüksek (≥15)</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#d29922"></div> Orta (8-14)</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#f85149"></div> Düşük (&lt;8)</div>
+    </div>
+    <table>
+      <thead>
+        <tr><th>Puan Aralığı</th><th>Renk</th><th>Anlam</th><th>Tipik Durum</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="badge b-green">≥ 15</span></td>
+          <td><div style="display:flex;align-items:center;gap:6px"><div style="width:36px;height:18px;border-radius:4px;background:#1a3326;border:1px solid #3fb95060"></div><span class="mono" style="color:var(--green)">Yeşil</span></div></td>
+          <td>Güçlü eşleşme</td>
+          <td>Sektör + bölüm + şehir birden fazlası tutmuş</td>
+        </tr>
+        <tr>
+          <td><span class="badge b-amber">8 – 14</span></td>
+          <td><div style="display:flex;align-items:center;gap:6px"><div style="width:36px;height:18px;border-radius:4px;background:#3b2d0e;border:1px solid #d2992260"></div><span class="mono" style="color:var(--amber)">Sarı</span></div></td>
+          <td>Orta eşleşme</td>
+          <td>Bir-iki kriter iyi örtüşmüş</td>
+        </tr>
+        <tr>
+          <td><span class="badge b-red">&lt; 8</span></td>
+          <td><div style="display:flex;align-items:center;gap:6px"><div style="width:36px;height:18px;border-radius:4px;background:#3d1a1a;border:1px solid #f8514960"></div><span class="mono" style="color:var(--red)">Kırmızı</span></div></td>
+          <td>Zayıf eşleşme</td>
+          <td>Ortak kelime az veya hiç yok, ama en iyi mevcut seçenek</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<hr>
+
+<!-- ═══════════════════════════ STEP 6: RESULTS SUMMARY ═══════════════════════════ -->
+<div class="section" id="results">
+  <div class="section-header">
+    <div class="step-num step-amber">6</div>
+    <div><h2>Çalıştırma Sonuçları</h2><p>2026 yılı eşleştirme sonuçları özeti</p></div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card" style="border-top:3px solid var(--green)">
+      <h3 style="color:var(--green)">&#9989; Genel Özet</h3>
+      <table>
+        <tbody>
+          <tr><td>Toplam başvuran mentee</td><td class="mono" style="font-weight:700;color:var(--text)">308</td></tr>
+          <tr><td>Eşleşme bekleyen</td><td class="mono" style="font-weight:700;color:var(--blue)">227</td></tr>
+          <tr><td>Önceden eşleşmiş</td><td class="mono" style="font-weight:700;color:var(--green)">81</td></tr>
+          <tr><td>Yeni eşleştirilen</td><td class="mono" style="font-weight:700;color:var(--green)">227</td></tr>
+          <tr><td>Eşleştirilemeyen</td><td class="mono" style="font-weight:700;color:var(--cyan)">0</td></tr>
+          <tr><td colspan="2" style="border-bottom:none;padding-top:8px">
+            <div class="score-bar">
+              <div style="font-size:11px;color:var(--text-muted);min-width:100px">Başarı Oranı</div>
+              <div class="score-bar-track"><div class="score-bar-fill" style="width:100%;background:var(--green)"></div></div>
+              <div class="score-bar-label c-green">100%</div>
+            </div>
+          </td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card" style="border-top:3px solid var(--purple)">
+      <h3 style="color:var(--purple)">&#128202; Mentor Kapasite</h3>
+      <table>
+        <tbody>
+          <tr><td>Toplam mentor</td><td class="mono" style="font-weight:700;color:var(--text)">225</td></tr>
+          <tr><td>Toplam kapasite</td><td class="mono" style="font-weight:700;color:var(--blue)">311+</td></tr>
+          <tr><td>Yeni atanan</td><td class="mono" style="font-weight:700;color:var(--green)">227</td></tr>
+          <tr><td colspan="2" style="border-bottom:none;padding-top:8px">
+            <div class="score-bar">
+              <div style="font-size:11px;color:var(--text-muted);min-width:100px">Doluluk</div>
+              <div class="score-bar-track"><div class="score-bar-fill" style="width:73%;background:var(--amber)"></div></div>
+              <div class="score-bar-label c-amber">~73%</div>
+            </div>
+          </td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <h3>&#128200; Terminal Çıktısı</h3>
+    <div class="code">
+<span class="cm">PS E:\Programming\mentor_mentee></span> python scripts/mentor_mentee_eslestirme.py
+Mentees needing match: <span class="num">227</span>
+Available mentors: <span class="num">225</span>
+Total remaining mentor capacity: <span class="num">311</span>
+Computing scores...
+Matched: <span class="num">227</span>
+Unmatched: <span class="num">0</span>
+
+<span class="str">✅ Saved: E:\Programming\mentor_mentee\data\Mentor_Mentee_Eslestirme_2026.xlsx</span>
+   Yeni eşleşme: <span class="num">227</span>
+   Mevcut:       <span class="num">81</span>
+   Eşleşmeyen:   <span class="num">0</span>
+    </div>
+  </div>
+</div>
+
+<hr>
+
+<!-- ═══════════════════════════ COMPLETE MAP ═══════════════════════════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="step-num step-blue">&#9670;</div>
+    <div><h2>Kod-Algoritma Haritası</h2><p>Her adımın scriptteki karşılığı</p></div>
+  </div>
+
+  <div class="card">
+    <table>
+      <thead>
+        <tr><th>#</th><th>Adım</th><th>Satır Aralığı</th><th>Anahtar Fonksiyon / Yapı</th><th>Çıktı</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="badge b-blue">1</span></td>
+          <td>Veri Yükleme</td>
+          <td class="mono">7-30</td>
+          <td class="mono" style="color:var(--blue)">pd.read_excel()</td>
+          <td>mentee, mentor, history DataFrames</td>
+        </tr>
+        <tr>
+          <td><span class="badge b-blue">2a</span></td>
+          <td>Sütun Tanımları</td>
+          <td class="mono">32-60</td>
+          <td class="mono" style="color:var(--blue)">M_*, T_* sabitleri</td>
+          <td>Index bazlı sütun erişimi</td>
+        </tr>
+        <tr>
+          <td><span class="badge b-green">2b</span></td>
+          <td>Yardımcı Fonksiyonlar</td>
+          <td class="mono">62-90</td>
+          <td class="mono" style="color:var(--blue)">clean, parse_score, parse_capacity, text_overlap</td>
+          <td>Metin temizleme & puanlama araçları</td>
+        </tr>
+        <tr>
+          <td><span class="badge b-green">2c</span></td>
+          <td>Kapasite & Blok Hesaplama</td>
+          <td class="mono">92-123</td>
+          <td class="mono" style="color:var(--blue)">mentor_remaining{}, historical_pairs{}</td>
+          <td>Dict: mentor → kalan kapasite; Set: engelli çiftler</td>
+        </tr>
+        <tr>
+          <td><span class="badge b-purple">3</span></td>
+          <td>Puanlama Fonksiyonu</td>
+          <td class="mono">130-195</td>
+          <td class="mono" style="color:var(--blue)">score_pair(me_row, mr_row)</td>
+          <td>0-100 arası puan (veya -999 blok)</td>
+        </tr>
+        <tr>
+          <td><span class="badge b-amber">4</span></td>
+          <td>Greedy Eşleştirme</td>
+          <td class="mono">200-255</td>
+          <td class="mono" style="color:var(--blue)">for döngüsü + candidates.sort()</td>
+          <td>results[], unmatched[], remaining{}</td>
+        </tr>
+        <tr>
+          <td><span class="badge b-red">5</span></td>
+          <td>Excel Çıktı</td>
+          <td class="mono">280-490</td>
+          <td class="mono" style="color:var(--blue)">openpyxl Workbook</td>
+          <td>5 sayfalık biçimlendirilmiş .xlsx</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Footer -->
+<div style="text-align:center;padding:32px 0;color:var(--text-muted);font-size:11px">
+  Mentor-Mentee Eşleştirme Algoritması Raporu &bull; 2026 &bull; Otomatik oluşturuldu
+</div>
+
+</div><!-- /container -->
+</body>
+</html>

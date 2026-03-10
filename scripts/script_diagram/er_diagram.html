@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>Mentor-Mentee ER Diyagramı</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Space+Grotesk:wght@400;600;700&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #0d1117;
+    color: #e6edf3;
+    font-family: 'Space Grotesk', sans-serif;
+    min-height: 100vh;
+    overflow-x: auto;
+  }
+
+  header {
+    padding: 24px 40px 16px;
+    border-bottom: 1px solid #21262d;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  header h1 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #f0f6fc;
+    letter-spacing: -0.3px;
+  }
+  header p { font-size: 13px; color: #7d8590; margin-top: 3px; }
+  .badge {
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.5px;
+  }
+  .badge-blue  { background: #1f3d5c; color: #58a6ff; border: 1px solid #388bfd40; }
+  .badge-green { background: #1a3326; color: #3fb950; border: 1px solid #3fb95040; }
+  .badge-amber { background: #3b2d0e; color: #d29922; border: 1px solid #d2992240; }
+
+  .canvas {
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+  }
+
+  /* ── Table card ── */
+  .table-card {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 10px;
+    overflow: hidden;
+    width: 420px;
+    box-shadow: 0 8px 32px #00000060;
+    position: relative;
+  }
+  .table-card:hover { border-color: #58a6ff60; }
+  .table-card:hover .table-header { border-bottom-color: #58a6ff40; }
+
+  .table-header {
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid #21262d;
+  }
+  .table-header .icon {
+    width: 28px; height: 28px;
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+  }
+  .icon-blue  { background: #1f3d5c; }
+  .icon-green { background: #1a3326; }
+  .icon-amber { background: #3b2d0e; }
+  .icon-purple{ background: #2d1f5c; }
+
+  .table-header .tname {
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: -0.2px;
+  }
+  .table-header .tname span {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: #7d8590;
+    font-weight: 400;
+    margin-left: 6px;
+  }
+  .row-count {
+    margin-left: auto;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: #7d8590;
+  }
+
+  .col-list { padding: 4px 0; }
+
+  .col-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 16px;
+    transition: background 0.1s;
+    cursor: default;
+  }
+  .col-row:hover { background: #1c2128; }
+  .col-row.pk   { background: #1f2d1a; }
+  .col-row.fk   { background: #1a1f2d; }
+  .col-row.key  { background: #2d261a; }
+
+  .col-icon {
+    font-size: 10px;
+    width: 18px; text-align: center;
+    flex-shrink: 0;
+  }
+  .col-name {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    color: #cdd9e5;
+    flex: 1;
+  }
+  .col-row.pk .col-name { color: #ffa657; font-weight: 600; }
+  .col-row.fk .col-name { color: #79c0ff; }
+  .col-row.key .col-name { color: #e3b341; }
+
+  .col-type {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: #484f58;
+    flex-shrink: 0;
+  }
+  .col-desc {
+    font-size: 10px;
+    color: #484f58;
+    text-align: right;
+    flex-shrink: 0;
+    max-width: 130px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .divider { height: 1px; background: #21262d; margin: 0 16px; }
+  .section-label {
+    padding: 6px 16px 2px;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: #484f58;
+    font-weight: 600;
+  }
+
+  /* ── Connectors ── */
+  .diagram-wrapper {
+    position: relative;
+    display: flex;
+    gap: 60px;
+    align-items: flex-start;
+    padding: 0 20px;
+  }
+
+  .connector-svg {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    overflow: visible;
+  }
+
+  /* ── Center column ── */
+  .center-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+  }
+
+  /* ── Legend ── */
+  .legend {
+    display: flex;
+    gap: 24px;
+    padding: 16px 40px;
+    border-top: 1px solid #21262d;
+    margin-top: 20px;
+  }
+  .legend-item {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 11px; color: #7d8590;
+  }
+  .legend-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+  }
+  .line-pk   { width: 20px; height: 2px; background: #ffa657; border-radius: 2px; }
+  .line-fk   { width: 20px; height: 2px; background: #58a6ff; border-radius: 2px; }
+  .line-rel  { width: 20px; height: 1px; background: #3fb950; border-radius: 2px; border-top: 1px dashed #3fb950; }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>Mentor–Mentee Ağı 2026 — Veri Modeli</h1>
+    <p>Koç Üniversitesi Mezun İlişkileri · 3 tablo · Form verisi</p>
+  </div>
+  <div style="margin-left:auto;display:flex;gap:8px;flex-wrap:wrap">
+    <span class="badge badge-blue">308 Mentee</span>
+    <span class="badge badge-green">226 Mentor</span>
+    <span class="badge badge-amber">160 Geçmiş</span>
+  </div>
+</header>
+
+<div class="canvas">
+<div class="diagram-wrapper" id="wrap">
+
+  <!-- SVG connector lines drawn by JS -->
+  <svg class="connector-svg" id="connsvg"></svg>
+
+  <!-- ── MENTEE TABLE ── -->
+  <div class="table-card" id="tbl-mentee">
+    <div class="table-header">
+      <div class="icon icon-blue">🎓</div>
+      <div>
+        <div class="tname">MENTEE <span>Google Form → Excel</span></div>
+      </div>
+      <div class="row-count">308 rows</div>
+    </div>
+    <div class="col-list">
+
+      <div class="section-label">Kimlik</div>
+      <div class="col-row pk">
+        <span class="col-icon">🔑</span>
+        <span class="col-name">ID Numaranız</span>
+        <span class="col-type">INTEGER</span>
+        <span class="col-desc">PK — Öğrenci No</span>
+      </div>
+      <div class="col-row">
+        <span class="col-icon">·</span>
+        <span class="col-name">Adınız Soyadınız</span>
+        <span class="col-type">TEXT</span>
+        <span class="col-desc"></span>
+      </div>
+      <div class="col-row">
+        <span class="col-icon">·</span>
+        <span class="col-name">E-posta</span>
+        <span class="col-type">TEXT</span>
+        <span class="col-desc">UNIQUE</span>
+      </div>
+      <div class="col-row">
+        <span class="col-icon">·</span>
+        <span class="col-name">Telefon Numarası</span>
+        <span class="col-type">TEXT</span>
+        <span class="col-desc"></span>
+      </div>
+      <div class="col-row">
+        <span class="col-icon">·</span>
+        <span class="col-name">LinkedIn Profil</span>
+        <span class="col-type">URL</span>
+        <span class="col-desc"></span>
+      </div>
+      <div class="col-row">
+        <span class="col-icon">·</span>
+        <span class="col-name">Timestamp</span>
+        <span class="col-type">DATETIME</span>
+        <span class="col-desc">Form gönderimi</span>
+      </div>
+
+      <div class="divider"></div>
+      <div class="section-label">Akademik Bilgi</div>
+      <div class="col-row">
+        <span class="col-icon">·</span>
+        <span class="col-name">Bölüm</span>
+        <span class="col-type">TEXT</span>
+        <span class="col-desc">Eşleşme kriteri</span>
+      </div>
+      <div class="col-row">
+        <span class="col-icon">·</span>
+        <span class="col-name">Sınıf</span>
+        <span class="col-type">TEXT</span>
+        <span class="col-desc"></span>
+      </div>
+      <div class="col-row">
+        <span class="col-icon">·</span>
+        <span class="col-name">Şu anki Şehir/Ülke</span>
+        <span class="col-type">TEXT</span>
+        <span class="col-desc">Eşleşme kriteri</span>
+      </div>
+
+      <div class="divider"></div>
+      <div class="section-label">Kariyer & Tercihler</div>
+      <div class="col-row key">
+        <span class="col-icon">⭐</span>
+        <span class="col-name">İş / Staj Deneyimleri</span>
+        <span class="col-type">TEXT</span>
+        <span class="col-desc">Serbest metin</span>
+      </div>
+      <div class="col-row key">
+        <span class="col-icon">⭐</span>
+        <span class="col-name">Kariyer Hedefleri</span>
+        <span class="col-type">TEXT</span>
+        <span class="col-desc">Serbest metin</span>
+      </div>
+      <div class="col-row key">
+        <span class="col-icon">⭐</span>
+        <span class="col-name">İlgi Alanları / Hobiler</span>
+        <span class="col-type">TEXT</span>
+        <span class="col-desc">Serbest metin</span>
+      </div>
+      <div class="col-row key">
+        <span class="col-icon">⭐</span>
+        <span class="col-name">Nasıl bir mentor istiyor?</span>
+        <span class="col-type">TEXT</span>
+        <span class="col-desc">Serbest metin</span>
+      </div>
+      <div class="col-row key">
+        <span class="col-icon">⭐</span>
+        <span class="col-name">Destek almak istediği konular</span>
+        <span class="col-type">TEXT</span>
+        <span class="col-desc">Serbest metin</span>
+      </div>
+
+      <div class="divider"></div>
+      <div class="section-label">Önem Ağırlıkları (1–5 skala)</div>
+      <div class="col-row">
+        <span class="col-icon">·</span>
+        <span class="col-name">Ağırlık: Bölüm/Akademik</span>
+        <span class="col-type">INTEGER</span>
+        <span class="col-desc">1–5</span>
+      </div>
+      <div class="col-row">
+        <span class="col-icon">·</span>
+        <span class="col-name">Ağırlık: Sektör/Alan</span>
+        <span class="col-type">INTEGER</span>
+        <span class="col-desc">1–5</span>
+      </div>
+      <div class="col-row">
+        <span class="col-icon">·</span>
+        <span class="col-name">Ağırlık: Kurum/Şirket</span>
+        <span class="col-type">INTEGER</span>
+        <span class="col-desc">1–5</span>
+      </div>
+      <div class="col-row">
+        <span class="col-icon">·</span>
+        <span class="col-name">Ağırlık: Şehir/Ülke</span>
+        <span class="col-type">INTEGER</span>
+        <span class="col-desc">1–5</span>
+      </div>
+      <div class="col-row">
+        <span class="col-icon">·</span>
+        <span class="col-name">Ağırlık: İlgi Alanları</span>
+        <span class="col-type">INTEGER</span>
+        <span class="col-desc">1–5</span>
+      </div>
+      <div class="col-row">
+        <span class="col-icon">·</span>
+        <span class="col-name">Esnek mi? (ideal yoksa katılır mı)</span>
+        <span class="col-type">TEXT</span>
+        <span class="col-desc">Boolean gibi</span>
+      </div>
+
+      <div class="divider"></div>
+      <div class="section-label">Eşleşme</div>
+      <div class="col-row fk">
+        <span class="col-icon">🔗</span>
+        <span class="col-name">Eski Mentor</span>
+        <span class="col-type">TEXT</span>
+        <span class="col-desc">FK → MENTOR.Ad</span>
+      </div>
+      <div class="col-row fk">
+        <span class="col-icon">🔗</span>
+        <span class="col-name">Mentor (atandı)</span>
+        <span class="col-type">TEXT</span>
+        <span class="col-desc">FK → MENTOR.Ad</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── CENTER: ESLESTIRME table ── -->
+  <div class="center-col">
+    <div class="table-card" id="tbl-eslestirme" style="width:360px;">
+      <div class="table-header">
+        <div class="icon icon-purple">🔗</div>
+        <div>
+          <div class="tname">EŞLEŞME <span>İlişki tablosu</span></div>
+        </div>
+        <div class="row-count">308 rows</div>
+      </div>
+      <div class="col-list">
+        <div class="col-row pk">
+          <span class="col-icon">🔑</span>
+          <span class="col-name">eslestirme_id</span>
+          <span class="col-type">INTEGER</span>
+          <span class="col-desc">PK (auto)</span>
+        </div>
+        <div class="col-row fk">
+          <span class="col-icon">🔗</span>
+          <span class="col-name">mentee_id</span>
+          <span class="col-type">INTEGER</span>
+          <span class="col-desc">FK → MENTEE</span>
+        </div>
+        <div class="col-row fk">
+          <span class="col-icon">🔗</span>
+          <span class="col-name">mentor_ad</span>
+          <span class="col-type">TEXT</span>
+          <span class="col-desc">FK → MENTOR</span>
+        </div>
+        <div class="col-row">
+          <span class="col-icon">·</span>
+          <span class="col-name">eslestirme_puani</span>
+          <span class="col-type">FLOAT</span>
+          <span class="col-desc">0–100</span>
+        </div>
+        <div class="col-row">
+          <span class="col-icon">·</span>
+          <span class="col-name">donem</span>
+          <span class="col-type">TEXT</span>
+          <span class="col-desc">2026</span>
+        </div>
+        <div class="col-row">
+          <span class="col-icon">·</span>
+          <span class="col-name">durum</span>
+          <span class="col-type">TEXT</span>
+          <span class="col-desc">Yeni / Mevcut</span>
+        </div>
+        <div class="col-row">
+          <span class="col-icon">·</span>
+          <span class="col-name">created_at</span>
+          <span class="col-type">DATETIME</span>
+          <span class="col-desc"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- History table below -->
+    <div class="table-card" id="tbl-history" style="width:360px;">
+      <div class="table-header">
+        <div class="icon icon-amber">📋</div>
+        <div>
+          <div class="tname">SON_3_YIL_ESLESMELER <span>Geçmiş kayıt</span></div>
+        </div>
+        <div class="row-count">160 rows</div>
+      </div>
+      <div class="col-list">
+        <div class="col-row fk">
+          <span class="col-icon">🔗</span>
+          <span class="col-name">ID Numaranız</span>
+          <span class="col-type">INTEGER</span>
+          <span class="col-desc">FK → MENTEE.ID</span>
+        </div>
+        <div class="col-row">
+          <span class="col-icon">·</span>
+          <span class="col-name">Adınız Soyadınız</span>
+          <span class="col-type">TEXT</span>
+          <span class="col-desc">Mentee adı</span>
+        </div>
+        <div class="col-row fk">
+          <span class="col-icon">🔗</span>
+          <span class="col-name">Mentor</span>
+          <span class="col-type">TEXT</span>
+          <span class="col-desc">FK → MENTOR.Ad</span>
+        </div>
+        <div class="col-row">
+          <span class="col-icon">·</span>
+          <span class="col-name">DÖNEM</span>
+          <span class="col-type">TEXT</span>
+          <span class="col-desc">2022–2024</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── MENTOR TABLE ── -->
+  <div class="table-card" id="tbl-mentor">
+    <div class="table-header">
+      <div class="icon icon-green">👔</div>
+      <div>
+        <div class="tname">MENTOR <span>Google Form → Excel</span></div>
+      </div>
+      <div class="row-count">226 rows</div>
+    </div>
+    <div class="col-list">
+
+      <div class="section-label">Kimlik</div>
+      <div class="col-row pk">
+        <span class="col-icon">🔑</span>
+        <span class="col-name">Ad Soyadı</span>
+        <span class="col-type">TEXT</span>
+        <span class="col-desc">PK (doğal)</span>
+      </div>
+      <div class="col-row">
+        <span class="col-icon">·</span>
+        <span class="col-name">Email</span>
+        <span class="col-type">TEXT</span>
+        <span class="col-desc">UNIQUE</span>
+      </div>
+      <div class="col-row">
+        <span class="col-icon">·</span>
+        <span class="col-name">Telefon Numarası</span>
+        <span class="col-type">TEXT</span>
+        <span class="col-desc"></span>
+      </div>
+      <div class="col-row">
+        <span class="col-icon">·</span>
+        <span class="col-name">LinkedIn Profil</span>
+        <span class="col-type">URL</span>
+        <span class="col-desc"></span>
+      </div>
+      <div class="col-row">
+        <span class="col-icon">·</span>
+        <span class="col-name">Zaman Damgası</span>
+        <span class="col-type">DATETIME</span>
+        <span class="col-desc">Form gönderimi</span>
+      </div>
+
+      <div class="divider"></div>
+      <div class="section-label">Konum</div>
+      <div class="col-row">
+        <span class="col-icon">·</span>
+        <span class="col-name">Şehir / Ülke (ham)</span>
+        <span class="col-type">TEXT</span>
+        <span class="col-desc">Form girdisi</span>
+      </div>
+      <div class="col-row key">
+        <span class="col-icon">⭐</span>
+        <span class="col-name">ŞEHİR-ÜLKE (normalize)</span>
+        <span class="col-type">TEXT</span>
+        <span class="col-desc">Temizlenmiş</span>
+      </div>
+
+      <div class="divider"></div>
+      <div class="section-label">KÜ Geçmişi</div>
+      <div class="col-row">
+        <span class="col-icon">·</span>
+        <span class="col-name">Mezuniyet Yılı</span>
+        <span class="col-type">INTEGER</span>
+        <span class="col-desc"></span>
+      </div>
+      <div class="col-row key">
+        <span class="col-icon">⭐</span>
+        <span class="col-name">Bölüm(ler) / Derece(ler)</span>
+        <span class="col-type">TEXT</span>
+        <span class="col-desc">Eşleşme kriteri</span>
+      </div>
+      <div class="col-row">
+        <span class="col-icon">·</span>
+        <span class="col-name">Mezuniyet Sonrası Eğitim</span>
+        <span class="col-type">TEXT</span>
+        <span class="col-desc">Yüksek lisans vb.</span>
+      </div>
+
+      <div class="divider"></div>
+      <div class="section-label">Profesyonel Bilgi</div>
+      <div class="col-row key">
+        <span class="col-icon">⭐</span>
+        <span class="col-name">Şu an Çalıştığı Kurum</span>
+        <span class="col-type">TEXT</span>
+        <span class="col-desc">Eşleşme kriteri</span>
+      </div>
+      <div class="col-row key">
+        <span class="col-icon">⭐</span>
+        <span class="col-name">Şu anki Sektör</span>
+        <span class="col-type">TEXT</span>
+        <span class="col-desc">Eşleşme kriteri</span>
+      </div>
+      <div class="col-row key">
+        <span class="col-icon">⭐</span>
+        <span class="col-name">Şu anki Pozisyon</span>
+        <span class="col-type">TEXT</span>
+        <span class="col-desc"></span>
+      </div>
+      <div class="col-row key">
+        <span class="col-icon">⭐</span>
+        <span class="col-name">Önceki Sektörler</span>
+        <span class="col-type">TEXT</span>
+        <span class="col-desc">Serbest metin</span>
+      </div>
+      <div class="col-row key">
+        <span class="col-icon">⭐</span>
+        <span class="col-name">Uzmanlık Alanları</span>
+        <span class="col-type">TEXT</span>
+        <span class="col-desc">Eşleşme kriteri</span>
+      </div>
+
+      <div class="divider"></div>
+      <div class="section-label">Mentorluk Geçmişi</div>
+      <div class="col-row">
+        <span class="col-icon">·</span>
+        <span class="col-name">Önceden Mentorluk Yaptı mı?</span>
+        <span class="col-type">BOOLEAN</span>
+        <span class="col-desc"></span>
+      </div>
+      <div class="col-row">
+        <span class="col-icon">·</span>
+        <span class="col-name">Hangi Programlarda?</span>
+        <span class="col-type">TEXT</span>
+        <span class="col-desc"></span>
+      </div>
+      <div class="col-row">
+        <span class="col-icon">·</span>
+        <span class="col-name">Deneyim Açıklaması</span>
+        <span class="col-type">TEXT</span>
+        <span class="col-desc">Serbest metin</span>
+      </div>
+      <div class="col-row">
+        <span class="col-icon">·</span>
+        <span class="col-name">Neden Mentor Olmak İstiyor?</span>
+        <span class="col-type">TEXT</span>
+        <span class="col-desc">Serbest metin</span>
+      </div>
+      <div class="col-row">
+        <span class="col-icon">·</span>
+        <span class="col-name">Mentee'den Beklentisi</span>
+        <span class="col-type">TEXT</span>
+        <span class="col-desc">Serbest metin</span>
+      </div>
+      <div class="col-row key">
+        <span class="col-icon">⭐</span>
+        <span class="col-name">Destek Verebileceği Alanlar</span>
+        <span class="col-type">TEXT</span>
+        <span class="col-desc">Eşleşme kriteri</span>
+      </div>
+      <div class="col-row">
+        <span class="col-icon">·</span>
+        <span class="col-name">İlgi Alanları / Hobiler</span>
+        <span class="col-type">TEXT</span>
+        <span class="col-desc">Serbest metin</span>
+      </div>
+      <div class="col-row">
+        <span class="col-icon">·</span>
+        <span class="col-name">Eklemek İstedikleri</span>
+        <span class="col-type">TEXT</span>
+        <span class="col-desc">Serbest metin</span>
+      </div>
+
+      <div class="divider"></div>
+      <div class="section-label">Kapasite & Eşleşmeler</div>
+      <div class="col-row key">
+        <span class="col-icon">⭐</span>
+        <span class="col-name">Kaç Mentee? (kapasite)</span>
+        <span class="col-type">INTEGER</span>
+        <span class="col-desc">1–5</span>
+      </div>
+      <div class="col-row fk">
+        <span class="col-icon">🔗</span>
+        <span class="col-name">Mentee Adı 1</span>
+        <span class="col-type">TEXT</span>
+        <span class="col-desc">FK → MENTEE</span>
+      </div>
+      <div class="col-row fk">
+        <span class="col-icon">🔗</span>
+        <span class="col-name">Mentee ID 1</span>
+        <span class="col-type">INTEGER</span>
+        <span class="col-desc">FK → MENTEE.ID</span>
+      </div>
+      <div class="col-row fk">
+        <span class="col-icon">🔗</span>
+        <span class="col-name">Mentee Adı 2</span>
+        <span class="col-type">TEXT</span>
+        <span class="col-desc">FK → MENTEE</span>
+      </div>
+      <div class="col-row fk">
+        <span class="col-icon">🔗</span>
+        <span class="col-name">Mentee ID 2</span>
+        <span class="col-type">INTEGER</span>
+        <span class="col-desc">FK → MENTEE.ID</span>
+      </div>
+      <div class="col-row fk">
+        <span class="col-icon">🔗</span>
+        <span class="col-name">Mentee Adı 3</span>
+        <span class="col-type">TEXT</span>
+        <span class="col-desc">FK → MENTEE</span>
+      </div>
+      <div class="col-row fk">
+        <span class="col-icon">🔗</span>
+        <span class="col-name">Mentee ID 3</span>
+        <span class="col-type">INTEGER</span>
+        <span class="col-desc">FK → MENTEE.ID</span>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /diagram-wrapper -->
+
+<div class="legend">
+  <div class="legend-item"><div class="line-pk"></div> Primary Key (PK)</div>
+  <div class="legend-item"><div class="line-fk"></div> Foreign Key (FK)</div>
+  <div class="legend-item"><span style="color:#e3b341;font-size:12px">⭐</span>&nbsp; Eşleşme kriteri olarak kullanılan alan</div>
+  <div class="legend-item" style="margin-left:auto;color:#484f58;font-size:11px">
+    Koç Üniversitesi · Mezun İlişkileri · 2026
+  </div>
+</div>
+
+</div><!-- /canvas -->
+
+<script>
+// Draw connector lines between tables via SVG
+function drawConnectors() {
+  const wrap = document.getElementById('wrap');
+  const svg  = document.getElementById('connsvg');
+  svg.innerHTML = '';
+
+  const wRect = wrap.getBoundingClientRect();
+
+  function midRight(el) {
+    const r = el.getBoundingClientRect();
+    return { x: r.right - wRect.left, y: r.top + r.height/2 - wRect.top };
+  }
+  function midLeft(el) {
+    const r = el.getBoundingClientRect();
+    return { x: r.left - wRect.left, y: r.top + r.height/2 - wRect.top };
+  }
+  function midTop(el) {
+    const r = el.getBoundingClientRect();
+    return { x: r.left + r.width/2 - wRect.left, y: r.top - wRect.top };
+  }
+  function midBottom(el) {
+    const r = el.getBoundingClientRect();
+    return { x: r.left + r.width/2 - wRect.left, y: r.bottom - wRect.top };
+  }
+
+  function bezier(p1, p2, color, label, cardinality) {
+    const cx = (p1.x + p2.x) / 2;
+    const path = document.createElementNS('http://www.w3.org/2000/svg','path');
+    path.setAttribute('d', `M${p1.x},${p1.y} C${cx},${p1.y} ${cx},${p2.y} ${p2.x},${p2.y}`);
+    path.setAttribute('stroke', color);
+    path.setAttribute('stroke-width', '1.5');
+    path.setAttribute('fill', 'none');
+    path.setAttribute('opacity', '0.7');
+    svg.appendChild(path);
+
+    // Dots at endpoints
+    [p1, p2].forEach(p => {
+      const c = document.createElementNS('http://www.w3.org/2000/svg','circle');
+      c.setAttribute('cx', p.x); c.setAttribute('cy', p.y); c.setAttribute('r', 3);
+      c.setAttribute('fill', color); c.setAttribute('opacity','0.8');
+      svg.appendChild(c);
+    });
+
+    // Label
+    if (label) {
+      const mx = (p1.x + p2.x)/2, my = (p1.y + p2.y)/2 - 8;
+      const t = document.createElementNS('http://www.w3.org/2000/svg','text');
+      t.setAttribute('x', mx); t.setAttribute('y', my);
+      t.setAttribute('text-anchor','middle');
+      t.setAttribute('fill', color);
+      t.setAttribute('font-size','9');
+      t.setAttribute('font-family','JetBrains Mono, monospace');
+      t.setAttribute('opacity','0.8');
+      t.textContent = cardinality || label;
+      svg.appendChild(t);
+    }
+  }
+
+  function vertBezier(p1, p2, color, label) {
+    const cy = (p1.y + p2.y) / 2;
+    const path = document.createElementNS('http://www.w3.org/2000/svg','path');
+    path.setAttribute('d', `M${p1.x},${p1.y} C${p1.x},${cy} ${p2.x},${cy} ${p2.x},${p2.y}`);
+    path.setAttribute('stroke', color);
+    path.setAttribute('stroke-width', '1.5');
+    path.setAttribute('fill', 'none');
+    path.setAttribute('stroke-dasharray', label === 'dashed' ? '4,3' : 'none');
+    path.setAttribute('opacity', '0.65');
+    svg.appendChild(path);
+
+    [p1, p2].forEach(p => {
+      const c = document.createElementNS('http://www.w3.org/2000/svg','circle');
+      c.setAttribute('cx', p.x); c.setAttribute('cy', p.y); c.setAttribute('r', 3);
+      c.setAttribute('fill', color); c.setAttribute('opacity','0.8');
+      svg.appendChild(c);
+    });
+  }
+
+  const mentee  = document.getElementById('tbl-mentee');
+  const mentor  = document.getElementById('tbl-mentor');
+  const esles   = document.getElementById('tbl-eslestirme');
+  const history = document.getElementById('tbl-history');
+
+  // MENTEE → EŞLEŞME
+  bezier(midRight(mentee), midLeft(esles), '#79c0ff', 'mentee_id', '1 ──< N');
+  // MENTOR → EŞLEŞME
+  bezier(midLeft(mentor), midRight(esles), '#3fb950', 'mentor_ad', '1 ──< N');
+  // MENTEE → HISTORY
+  vertBezier(midBottom(mentee), midTop(history), '#d29922', 'dashed');
+  // MENTOR → HISTORY
+  vertBezier(midBottom(mentor), midTop(history), '#d29922', 'dashed');
+}
+
+window.addEventListener('load', () => { setTimeout(drawConnectors, 100); });
+window.addEventListener('resize', drawConnectors);
+</script>
+</body>
+</html>
