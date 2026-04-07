@@ -41,11 +41,25 @@ env/
 .ipynb_checkpoints/
 *.ipynb
 
-# Data (keep only source Excel)
+# Data (keep only source Excel, ignore outputs & cache)
 *.pickle
 *.pkl
 *.csv
 Mentor_Mentee*.xlsx
+~$*.xlsx           # Temp Excel files
+data/03_cache/     # Cached embeddings
+data/04_output/    # Output files
+data/02_processed/ # Processed data
 
 # Logs
+logs/
 *.log
+
+# Environment
+.env
+.env.local
+*.env
+
+# OS
+Thumbs.db
+Desktop.ini

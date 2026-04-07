@@ -29,16 +29,40 @@ Türkiye'nin en gelişmiş **optimal eşleştirme algoritması** - Mentor-Mentee
 ```
 mentor_mentee/
 ├── data/
-│   ├── Mentor Mezun Ağı 2026 Başvurular.xlsx    # Giriş verisi
-│   └── Mentor_Mentee_Optimal_Eslestirme_2026.xlsx  # Çıktı raporu
+│   ├── 01_raw/                                  # Kaynak Excel dosyaları
+│   ├── 02_processed/                            # İşlenen veri (gelecek)
+│   ├── 03_cache/                                # Cached embeddings (embedding eklentisi)
+│   ├── 04_output/                               # Çıktı dosyaları
+│   ├── Mentor Mezun Ağı 2026 Başvurular.xlsx  # Giriş verisi
+│   └── Mentor_Mentee_Optimal_Eslestirme_2026.xlsx # Çıktı raporu
+├── docs/
+│   ├── 00_SKILL_STANDARD.md                    # Folder organization standard
+│   ├── 01_PROJECT_ANALYSIS.md                  # Proje analizi & problem statement
+│   ├── 02_COMPREHENSIVE_GUIDE.md               # Technical deep-dive & architecture
+│   └── 03_EMBEDDING_GUIDE.md                   # Embedding 384 semantic matching
 ├── scripts/
-│   ├── mentor_mentee_eslestirme.py              # Ana algoritma
-│   ├── mentor_mentee_eslestirme_greedy_backup.py # Eski greedy yöntemi
+│   ├── mentor_mentee_eslestirme.py             # Ana algoritma (Hungarian)
+│   ├── mentor_mentee_eslestirme_greedy_backup.py # Legacy (Greedy)
+│   ├── utils/                                   # Helper modules
 │   └── script_diagram/
-│       ├── er_diagram.html                      # ER diyagramı
-│       └── algoritma_raporu.html                # Algoritma detaylı raporu
-└── README.md                                     # Bu dosya
+│       ├── er_diagram.html                     # ER diyagramı
+│       └── algoritma_raporu.html               # Algoritma raporu
+├── config/
+│   └── default.yaml                            # Algoritma parametreleri (coming)
+├── requirements.txt                            # Python dependencies
+├── .gitignore                                  # Git ignore rules
+├── ANALIZ_RAPORU.md                            # Orijinal analiz raporu
+└── README.md                                   # Bu dosya
 ```
+
+## 📚 Dokümantasyon
+
+Detaylı teknik belgeler `docs/` klasöründe:
+
+- **[00_SKILL_STANDARD.md](docs/00_SKILL_STANDARD.md)** — Folder structure, naming conventions, tier documentation
+- **[01_PROJECT_ANALYSIS.md](docs/01_PROJECT_ANALYSIS.md)** — 5 criteria (sector, dept, city, interest, support), blocking rules, 2026 results
+- **[02_COMPREHENSIVE_GUIDE.md](docs/02_COMPREHENSIVE_GUIDE.md)** — Algorithm architecture, mathematical formulas, ensemble matching
+- **[03_EMBEDDING_GUIDE.md](docs/03_EMBEDDING_GUIDE.md)** — Embedding 384 semantic matching, models, similarity metrics, caching
 
 ## 🔧 Teknoloji Stack
 

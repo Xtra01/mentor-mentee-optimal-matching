@@ -1,0 +1,125 @@
+# Mentor-Mentee Optimal Matching Configuration
+# Default parameters for Hungarian algorithm
+
+# Algorithm parameters
+algorithm:
+  name: "hungarian"
+  description: "Kuhn-Munkres optimal assignment algorithm"
+  method: "scipy.optimize.linear_sum_assignment"
+  random_seed: 42  # For reproducibility
+
+# Text similarity parameters
+similarity:
+  # TF-IDF ensemble: Word TF-IDF + Char N-gram + Token Overlap
+  word_tfidf:
+    ngram_range: [1, 2]
+    max_df: 0.95
+    min_df: 1
+    
+  char_ngram:
+    ngram_range: [3, 5]
+    max_df: 0.95
+    min_df: 1
+    
+  token_overlap:
+    enabled: true
+    
+  # Combination method
+  ensemble_method: "max"  # max, mean, or weighted_sum
+  weights:
+    word_tfidf: 0.4
+    char_ngram: 0.35
+    token_overlap: 0.25
+
+# Scoring weights (for 5 criteria)
+scoring:
+  max_score: 100
+  criteria:
+    sector:       # Sektör/Kariyer eşleşmesi
+      weight: 35
+      normalized: true  # normalized by mentee's 1-5 importance rating
+      
+    department:   # Bölüm eşleşmesi
+      weight: 30
+      normalized: true
+      
+    city:         # Şehir eşleşmesi
+      weight: 15
+      normalized: true
+      rule_based: true  # special rules for Istanbul, Ankara, Izmir
+      
+    interest:     # İlgi alanı eşleşmesi
+      weight: 10
+      normalized: true
+      
+    support:      # Destek konusu eşleşmesi
+      weight: 10
+      normalized: false  # not normalized
+
+# Turkish NLP parameters
+turkish:
+  morphological_normalization: true
+  remove_suffixes: true
+  
+  common_suffixes:
+    - "lerin"
+    - "lar"
+    - "dan"
+    - "daki"
+    - "lik"
+    - "sı"
+    - "ın"
+    - "i"
+    - "nin"
+    - "ndan"
+    - "ına"
+    - "inde"
+    # ... 400+ more Turkish suffixes (see scripts/mentor_mentee_eslestirme.py)
+  
+  stopwords:  # Turkish common words to ignore
+    - "ve"
+    - "ile"
+    - "bir"
+    - "bu"
+    - "o"
+    - "için"
+    # ... 100+ more
+
+# Blocking rules
+blocking:
+  block_old_mentors: true         # Don't match with previous mentors
+  block_historical_pairs: true    # Don't re-match historical pairs
+  historical_lookback_years: 3    # 3 years of history to block
+  block_score: -1000000000        # Score for blocked pairs (very negative)
+
+# Capacity constraints
+capacity:
+  # Each mentor can be matched with max_capacity mentees
+  # If not specified per mentor, use default_capacity
+  default_capacity: 2             # Most mentors can take 2 mentees
+  override_file: null             # Optional: Excel file with per-mentor capacities
+
+# Output parameters
+output:
+  excel_file: "Mentor_Mentee_Optimal_Eslestirme_2026.xlsx"
+  sheets:
+    - "Eslesmeler"                    # Main matches
+    - "Eslestirilemeyenler"           # Unmatched mentees
+    - "Mentor_Yuk_Ozeti"              # Mentor load summary
+    - "Ozet_Istatistik"               # Overall statistics
+  
+  quality_tiers:
+    high: 15    # Score >= 15 (out of 36)
+    medium: 8   # Score >= 8
+    low: 0      # Score < 8
+  
+  formatting:
+    header_freeze: true
+    auto_filter: true
+    color_code: true
+
+# Logging
+logging:
+  level: "INFO"  # DEBUG, INFO, WARNING, ERROR
+  file: "logs/mentor_mentee.log"
+  console: true
