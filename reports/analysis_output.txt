@@ -1,0 +1,26 @@
+Traceback (most recent call last):
+  File "E:\Programming\mentor_mentee\scripts\deep_sample_analysis.py", line 125, in <module>
+    mentee_df, mentor_df = detailed_sample_analysis()
+                           ~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\Programming\mentor_mentee\scripts\deep_sample_analysis.py", line 16, in detailed_sample_analysis
+    mentee_df = pd.read_excel(mentee_file, sheet_name='Mentee')
+  File "C:\Users\Ekrem\AppData\Roaming\Python\Python313\site-packages\pandas\io\excel\_base.py", line 495, in read_excel
+    io = ExcelFile(
+        io,
+    ...<2 lines>...
+        engine_kwargs=engine_kwargs,
+    )
+  File "C:\Users\Ekrem\AppData\Roaming\Python\Python313\site-packages\pandas\io\excel\_base.py", line 1550, in __init__
+    ext = inspect_excel_format(
+        content_or_path=path_or_buffer, storage_options=storage_options
+    )
+  File "C:\Users\Ekrem\AppData\Roaming\Python\Python313\site-packages\pandas\io\excel\_base.py", line 1402, in inspect_excel_format
+    with get_handle(
+         ~~~~~~~~~~^
+        content_or_path, "rb", storage_options=storage_options, is_text=False
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ) as handle:
+    ^
+  File "C:\Users\Ekrem\AppData\Roaming\Python\Python313\site-packages\pandas\io\common.py", line 882, in get_handle
+    handle = open(handle, ioargs.mode)
+FileNotFoundError: [Errno 2] No such file or directory: 'data\\Mentor Mezun A\u011f\u0131 2026 Ba\u015fvurular.xlsx'

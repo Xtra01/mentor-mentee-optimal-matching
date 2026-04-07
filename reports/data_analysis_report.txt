@@ -1,0 +1,258 @@
+====================================================================================================
+LOADING DATA...
+====================================================================================================
+File: Mentor Mezun Ag╠å─▒ 2026 Bas╠ºvurular.xlsx
+
+
+MENTEE DATA: 308 rows x 25 columns
+MENTOR DATA: 226 rows x 30 columns
+
+
+====================================================================================================
+MENTEE COLUMNS:
+====================================================================================================
+ 1. Timestamp
+ 2. Ad─▒n─▒z -Soyad─▒n─▒z / Name-Surname
+ 3. ID Numaran─▒z/ ID No
+ 4. E-posta / Email
+ 5. Telefon Numaras─▒ / Phone Number
+ 6. Linkedin profil linkinizi ekleyiniz/ Please add your Linkedin profile
+ 7. ┼₧u anda ya┼ƒad─▒─ƒ─▒n─▒z ┼ƒehir ve ├╝lke /The city and country you currently reside in
+ 8. B├╢l├╝m├╝n├╝z/Your Major
+ 9. S─▒n─▒f─▒n─▒z / Your Grade
+10. ─░┼ƒ ve staj deneyimleriniz ( Kurum, sekt├╢r, departman, pozisyon, tarih vb.) / You
+11. Kariyer Hedefleriniz ( Akademi - ─░┼ƒ D├╝nyas─▒, Kurum, Sekt├╢r, Pozisyon vb.) / Your
+12. ─░lgi alanlar─▒n─▒z ve hobileriniz ( Aktif oldu─ƒunuz ├╢─ƒrenci kul├╝plerini bu alanda 
+13. Nas─▒l bir mezun ile e┼ƒle┼ƒmek istersiniz? ( B├╢l├╝m, sekt├╢r, kurum, ya┼ƒad─▒─ƒ─▒ ┼ƒehir-
+14. Bu programa neden kat─▒lmak istiyorsunuz? Program─▒n size neler katabilece─ƒini d├╝┼ƒ
+15. Hangi konularda destek almak istiyorsunuz? / Which topics do you want to receive
+16. B├╢l├╝m├╝ - akademik ge├ºmi┼ƒi / Academic background / Field of study]
+17.  [Sekt├╢r├╝ - alan─▒ / Industry - Field of expertise]
+18. [Kurumu - ┼ƒirketi - ├╝niversitesi / Organization - Company - University]
+19. Bir mentor ile e┼ƒle┼ƒtirilirken a┼ƒa─ƒ─▒daki kriterlerin sizin i├ºin ne kadar ├╢nemli 
+20.  [┼₧ehir ve/veya ├╝lkesi / City and/or country of residence]
+21. Bir mentor ile e┼ƒle┼ƒtirilirken a┼ƒa─ƒ─▒daki kriterlerin sizin i├ºin ne kadar ├╢nemli 
+22. [─░lgi alanlar─▒ / Areas of interest]
+23. MentorΓÇômentee e┼ƒle┼ƒtirme s├╝recine dair tercihlerinizi a┼ƒa─ƒ─▒da belirtiniz.
+Mentor
+24. Eski Mentor
+25. Mentor
+
+
+====================================================================================================
+MENTOR COLUMNS:
+====================================================================================================
+ 1. Zaman damgas─▒
+ 2. Ad- Soyad─▒ / Name - Surname
+ 3. Email
+ 4. Telefon numaras─▒ / Phone number
+ 5. Linkedin profil linkinizi ekleyiniz/Please add your Linkedin profile
+ 6. ┼₧u an ya┼ƒad─▒─ƒ─▒n─▒z ┼ƒehir-├╝lke //The city-country you live in
+ 7. ┼₧EH─░R-├£LKE
+ 8. ─░lgi alanlar─▒n─▒z, hobileriniz ve sosyal faaliyetleriniz ( ├£niversite y─▒llar─▒nda 
+ 9. Ko├º ├£niversitesi mezuniyet y─▒l─▒n─▒z/ Ko├º University Graduation Year
+10. Ko├º ├£niversitesi'nden mezun oldu─ƒunuz b├╢l├╝m(ler) ve derece(ler) / Major(s) and d
+11. Ko├º ├£niversitesi'nden mezuniyetiniz sonras─▒ ald─▒─ƒ─▒n─▒z akademik e─ƒitimleri belirt
+12. ┼₧u an ├ºal─▒┼ƒt─▒─ƒ─▒n─▒z kurum / Your current institution
+13. ┼₧u an yer ald─▒─ƒ─▒n─▒z sekt├╢r / Your current sector
+14. ┼₧u an ├ºal─▒┼ƒt─▒─ƒ─▒n─▒z pozisyon / Your current position
+15. Daha ├╢nce hangi sekt├╢r ve alanlarda ├ºal─▒┼ƒt─▒n─▒z? / In which sectors and fields di
+16. Profesyonel uzmanl─▒k alanlar─▒n─▒z─▒ belirtiniz. / Please indicate your professiona
+17. Daha ├╢nce mentorluk yapt─▒n─▒z m─▒?/ Have you been a mentor before?
+18. Hangi program veya programlarda mentorluk g├╢revi ├╝stlendiniz? /In which program(
+19. Bu programlardaki mentorluk deneyiminizi k─▒saca anlat─▒n─▒z/ Briefly describe your
+20. Neden mentor olmak istiyorsunuz? Bu programa neler katabilece─ƒinizi d├╝┼ƒ├╝n├╝yorsun
+21. E┼ƒle┼ƒece─ƒiniz menteenin bu programdan neler kazanmas─▒n─▒ bekliyorsunuz? / What do
+22. Destek verebilece─ƒiniz alanlar / Areas you can provide support
+23. Ka├º mentee ile g├╢r├╝┼ƒmeyi tercih edersiniz? / How many mentees do you prefer to m
+24. Eklemek istediklerinizi belirtiniz/ Is there anything you would like to add?
+25. Mentee Ad─▒1
+26. Mentee ID1
+27. Mentee Ad─▒2
+28. Mentee ID2
+29. Mentee Ad─▒3
+30. Mentee ID3
+
+
+====================================================================================================
+DATA QUALITY - MISSING VALUES:
+====================================================================================================
+
+Mentee nulls per column:
+  ─░┼ƒ ve staj deneyimleriniz ( Kurum, sekt├╢r, departman, pozisy: 1 (0.3%)
+  Kariyer Hedefleriniz ( Akademi - ─░┼ƒ D├╝nyas─▒, Kurum, Sekt├╢r, : 1 (0.3%)
+  ─░lgi alanlar─▒n─▒z ve hobileriniz ( Aktif oldu─ƒunuz ├╢─ƒrenci ku: 1 (0.3%)
+  Nas─▒l bir mezun ile e┼ƒle┼ƒmek istersiniz? ( B├╢l├╝m, sekt├╢r, ku: 1 (0.3%)
+  Bu programa neden kat─▒lmak istiyorsunuz? Program─▒n size nele: 1 (0.3%)
+  Hangi konularda destek almak istiyorsunuz? / Which topics do: 1 (0.3%)
+
+Mentor nulls per column:
+  Zaman damgas─▒: 1 (0.4%)
+  Telefon numaras─▒ / Phone number: 1 (0.4%)
+  Linkedin profil linkinizi ekleyiniz/Please add your Linkedin: 24 (10.6%)
+  ┼₧u an ya┼ƒad─▒─ƒ─▒n─▒z ┼ƒehir-├╝lke //The city-country you live in: 1 (0.4%)
+  ─░lgi alanlar─▒n─▒z, hobileriniz ve sosyal faaliyetleriniz ( ├£n: 3 (1.3%)
+  Ko├º ├£niversitesi'nden mezuniyetiniz sonras─▒ ald─▒─ƒ─▒n─▒z akadem: 84 (37.2%)
+  ┼₧u an ├ºal─▒┼ƒt─▒─ƒ─▒n─▒z kurum / Your current institution: 3 (1.3%)
+  ┼₧u an yer ald─▒─ƒ─▒n─▒z sekt├╢r / Your current sector: 1 (0.4%)
+  ┼₧u an ├ºal─▒┼ƒt─▒─ƒ─▒n─▒z pozisyon / Your current position: 3 (1.3%)
+  Daha ├╢nce hangi sekt├╢r ve alanlarda ├ºal─▒┼ƒt─▒n─▒z? / In which s: 4 (1.8%)
+
+
+====================================================================================================
+SAMPLE DATA (First 3 mentees):
+====================================================================================================
+
+   MENTEE 1:
+     Timestamp: 2026-03-02 11:19:42
+     Ad─▒n─▒z -Soyad─▒n─▒z / Name-Surname: Sudenaz Saz
+     ID Numaran─▒z/ ID No: 83622
+     E-posta / Email: ssaz22@ku.edu.tr
+     Telefon Numaras─▒ / Phone Number: 5414111443
+     Linkedin profil linkinizi ekleyiniz/ Please add your Linkedi: http://linkedin.com/in/sudenaz-saz-956818255
+     ┼₧u anda ya┼ƒad─▒─ƒ─▒n─▒z ┼ƒehir ve ├╝lke /The city and country you : ─░stanbul
+     B├╢l├╝m├╝n├╝z/Your Major: Industrial Engineering
+     S─▒n─▒f─▒n─▒z / Your Grade: 3
+     ─░┼ƒ ve staj deneyimleriniz ( Kurum, sekt├╢r, departman, pozisy: Eren Perakende-Planning Department
+     Kariyer Hedefleriniz ( Akademi - ─░┼ƒ D├╝nyas─▒, Kurum, Sekt├╢r, : I am not sure about my career
+     ─░lgi alanlar─▒n─▒z ve hobileriniz ( Aktif oldu─ƒunuz ├╢─ƒrenci ku: G├╢n├╝ll├╝l├╝k kul├╝b├╝
+     Nas─▒l bir mezun ile e┼ƒle┼ƒmek istersiniz? ( B├╢l├╝m, sekt├╢r, ku: Akademik d├╝nyas─▒nda olan ya da iyi bir ┼ƒirkette olan biriyle
+     Bu programa neden kat─▒lmak istiyorsunuz? Program─▒n size nele: Kariyerimi ┼ƒekillendirmek i├ºin ├╢nemli oldu─ƒunu hissediyorum umar─▒m olur
+     Hangi konularda destek almak istiyorsunuz? / Which topics do: Nas─▒l bir y├╢n ├ºizmem gerekti─ƒi konusunda, kendimi nas─▒l geli┼ƒtirebilece─ƒim konusunda
+     B├╢l├╝m├╝ - akademik ge├ºmi┼ƒi / Academic background / Field of s: 3 - Orta d├╝zeyde ├╢nemli / Moderately important
+      [Sekt├╢r├╝ - alan─▒ / Industry - Field of expertise]: 3 - Orta d├╝zeyde ├╢nemli / Moderately important
+     [Kurumu - ┼ƒirketi - ├╝niversitesi / Organization - Company - : 3 - Orta d├╝zeyde ├╢nemli / Moderately important
+      [┼₧ehir ve/veya ├╝lkesi / City and/or country of residence]: 2 - Az ├╢nemli / Slightly important
+     [─░lgi alanlar─▒ / Areas of interest]: 2 - Az ├╢nemli / Slightly important
+     MentorΓÇômentee e┼ƒle┼ƒtirme s├╝recine dair tercihlerinizi a┼ƒa─ƒ─▒d: E┼ƒle┼ƒme ideal olmasa bile programa dahil olmak isterim. / I would like to participate in the program
+
+   MENTEE 2:
+     Timestamp: 2026-03-02 16:49:45
+     Ad─▒n─▒z -Soyad─▒n─▒z / Name-Surname: En Alperen ├çil
+     ID Numaran─▒z/ ID No: 75934
+     E-posta / Email: ecil20@ku.edu.tr
+     Telefon Numaras─▒ / Phone Number: 5312768919
+     Linkedin profil linkinizi ekleyiniz/ Please add your Linkedi: https://www.linkedin.com/in/emin-alperen-%C3%A7-256581173?utm_source=share&utm_campaign=share_via&ut
+     ┼₧u anda ya┼ƒad─▒─ƒ─▒n─▒z ┼ƒehir ve ├╝lke /The city and country you : ─░stanbul, T├╝rkiye
+     B├╢l├╝m├╝n├╝z/Your Major: Ekonomi ve Matematik ├çift Anadal
+     S─▒n─▒f─▒n─▒z / Your Grade: 4
+     ─░┼ƒ ve staj deneyimleriniz ( Kurum, sekt├╢r, departman, pozisy: 1) KPMG Consultancy Department - Valuation and Models Intern (11/2024 - 02/2025)
+
+2) ─░┼ƒ Portf├╢y Y├╢ne
+     Kariyer Hedefleriniz ( Akademi - ─░┼ƒ D├╝nyas─▒, Kurum, Sekt├╢r, : ─░ktisadi Politika Yap─▒c─▒l─▒─ƒ─▒, Uluslararas─▒ ─░ktisadi Kurumlarda Y├╢netim Pozisyonlar─▒, Fon Y├╢netimi, Y
+     ─░lgi alanlar─▒n─▒z ve hobileriniz ( Aktif oldu─ƒunuz ├╢─ƒrenci ku: ─░lkokuldan beri gitar ve son zamanlarda klavye ├ºal─▒yorum. ├£lke geneli kat─▒ld─▒─ƒ─▒m ve ikincilik ald─▒─ƒ─▒
+     Nas─▒l bir mezun ile e┼ƒle┼ƒmek istersiniz? ( B├╢l├╝m, sekt├╢r, ku: Yat─▒r─▒m bankac─▒l─▒─ƒ─▒ veya varl─▒k y├╢netimi alanlar─▒nda ├ºal─▒┼ƒan, i┼ƒletme veya ekonomi mezunu bir mezun 
+     Bu programa neden kat─▒lmak istiyorsunuz? Program─▒n size nele: Ekonomi ve finans alan─▒nda olduk├ºa donan─▒ml─▒ ve analitik d├╝┼ƒ├╝nce gerektiren hemen hemen her alanda y
+     Hangi konularda destek almak istiyorsunuz? / Which topics do: Yurtd─▒┼ƒ─▒nda y├╝ksek lisans imkanlar─▒ ve finans/ ekonomi alan─▒nda kariyer imkanlar─▒
+     B├╢l├╝m├╝ - akademik ge├ºmi┼ƒi / Academic background / Field of s: 4 - ├ûnemli / Important
+      [Sekt├╢r├╝ - alan─▒ / Industry - Field of expertise]: 5 - ├çok ├╢nemli / Very important
+     [Kurumu - ┼ƒirketi - ├╝niversitesi / Organization - Company - : 4 - ├ûnemli / Important
+      [┼₧ehir ve/veya ├╝lkesi / City and/or country of residence]: 1 - Hi├º ├╢nemli de─ƒil / Not important at all
+     [─░lgi alanlar─▒ / Areas of interest]: 2 - Az ├╢nemli / Slightly important
+     MentorΓÇômentee e┼ƒle┼ƒtirme s├╝recine dair tercihlerinizi a┼ƒa─ƒ─▒d: E┼ƒle┼ƒme ideal olmasa bile programa dahil olmak isterim. / I would like to participate in the program
+
+   MENTEE 3:
+     Timestamp: 2/13/2026 18:24:53
+     Ad─▒n─▒z -Soyad─▒n─▒z / Name-Surname: Pelin Belfu Helvac─▒er
+     ID Numaran─▒z/ ID No: 84111
+     E-posta / Email: phelvacier22@ku.edu.tr
+     Telefon Numaras─▒ / Phone Number: 905315253747
+     Linkedin profil linkinizi ekleyiniz/ Please add your Linkedi: https://www.linkedin.com/in/pelin-belfu-helvac%C4%B1er-bb0a53250/
+     ┼₧u anda ya┼ƒad─▒─ƒ─▒n─▒z ┼ƒehir ve ├╝lke /The city and country you : ─░stanbul, T├╝rkiye
+     B├╢l├╝m├╝n├╝z/Your Major: Ekonomi & Felsefe (├çAP)
+     S─▒n─▒f─▒n─▒z / Your Grade: 4
+     ─░┼ƒ ve staj deneyimleriniz ( Kurum, sekt├╢r, departman, pozisy: Yap─▒ Kredi, Ekosistem ve ─░┼ƒ Birlikleri Geli┼ƒtirme, Uzun D├╢nem Stajyer
+┼₧i┼ƒecam, Mali ─░┼ƒler, Yaz Staj─▒
+     Kariyer Hedefleriniz ( Akademi - ─░┼ƒ D├╝nyas─▒, Kurum, Sekt├╢r, : ─░┼ƒ D├╝nyas─▒, Marketing Sekt├╢r├╝ (tercihim uluslararas─▒ ┼ƒirketler, belki luxury fashion alan─▒nda)
+     ─░lgi alanlar─▒n─▒z ve hobileriniz ( Aktif oldu─ƒunuz ├╢─ƒrenci ku: M├╝zik ve dans ile ilgilendim. Sekiz sene boyunca Bo─ƒazi├ºi Caz Korosu/Bo─ƒazi├ºi Gen├ºlik Korosu ile s├╢y
+     Nas─▒l bir mezun ile e┼ƒle┼ƒmek istersiniz? ( B├╢l├╝m, sekt├╢r, ku: Marketing sekt├╢r├╝nde devam etmi┼ƒ, belki belirtti─ƒim alanlarda ├ºal─▒┼ƒm─▒┼ƒ birisi. Viyana'da y├╝ksek lisa
+     Bu programa neden kat─▒lmak istiyorsunuz? Program─▒n size nele: Mezuniyet sonras─▒ ├╝lkede kalmak veya y├╝ksek lisans programlar─▒ arac─▒l─▒─ƒ─▒yla Avrupa'ya ta┼ƒ─▒nmak aras─▒
+     Hangi konularda destek almak istiyorsunuz? / Which topics do: ─░┼ƒ d├╝nyas─▒, bana uygun sekt├╢rler, y├╝ksek lisans
+     B├╢l├╝m├╝ - akademik ge├ºmi┼ƒi / Academic background / Field of s: 4 - ├ûnemli / Important
+      [Sekt├╢r├╝ - alan─▒ / Industry - Field of expertise]: 4 - ├ûnemli / Important
+     [Kurumu - ┼ƒirketi - ├╝niversitesi / Organization - Company - : 4 - ├ûnemli / Important
+      [┼₧ehir ve/veya ├╝lkesi / City and/or country of residence]: 4 - ├ûnemli / Important
+     [─░lgi alanlar─▒ / Areas of interest]: 2 - Az ├╢nemli / Slightly important
+     MentorΓÇômentee e┼ƒle┼ƒtirme s├╝recine dair tercihlerinizi a┼ƒa─ƒ─▒d: E┼ƒle┼ƒme ideal olmasa bile programa dahil olmak isterim. / I would like to participate in the program
+
+
+====================================================================================================
+SAMPLE DATA (First 3 mentors):
+====================================================================================================
+
+   MENTOR 1:
+     Zaman damgas─▒: 2026-01-31 11:51:52
+     Ad- Soyad─▒ / Name - Surname: ─░smail Boy
+     Email: ismailboy36@gmail.com
+     Telefon numaras─▒ / Phone number: 905322841188.0
+     Linkedin profil linkinizi ekleyiniz/Please add your Linkedin: ismail boy
+     ┼₧u an ya┼ƒad─▒─ƒ─▒n─▒z ┼ƒehir-├╝lke //The city-country you live in: istanbul
+     ┼₧EH─░R-├£LKE: ─░stanbul-T├╝rkiye
+     ─░lgi alanlar─▒n─▒z, hobileriniz ve sosyal faaliyetleriniz ( ├£n: spor, sanat
+     Ko├º ├£niversitesi mezuniyet y─▒l─▒n─▒z/ Ko├º University Graduatio: 2008
+     Ko├º ├£niversitesi'nden mezun oldu─ƒunuz b├╢l├╝m(ler) ve derece(l: ─░┼ƒletme Ebstit├╝s├╝, Executive MBA
+     Ko├º ├£niversitesi'nden mezuniyetiniz sonras─▒ ald─▒─ƒ─▒n─▒z akadem: Galatasaray Universitesi Sosyal Bilimler Enstit├╝s├╝, Y├╝ksek Lisans
+     ┼₧u an ├ºal─▒┼ƒt─▒─ƒ─▒n─▒z kurum / Your current institution: Boy AVM LTD
+     ┼₧u an yer ald─▒─ƒ─▒n─▒z sekt├╢r / Your current sector: Trade, Export & Import
+     ┼₧u an ├ºal─▒┼ƒt─▒─ƒ─▒n─▒z pozisyon / Your current position: Mem.of Board
+     Daha ├╢nce hangi sekt├╢r ve alanlarda ├ºal─▒┼ƒt─▒n─▒z? / In which s: Uluslararas─▒ Ticaret
+     Profesyonel uzmanl─▒k alanlar─▒n─▒z─▒ belirtiniz. / Please indic: International Relations & Political Economy, Marketing Strategy, Sales Management
+     Daha ├╢nce mentorluk yapt─▒n─▒z m─▒?/ Have you been a mentor bef: Hay─▒r
+     Neden mentor olmak istiyorsunuz? Bu programa neler katabilec: Deneyimleri Gen├º arkada┼ƒlarla Payla┼ƒmak
+     E┼ƒle┼ƒece─ƒiniz menteenin bu programdan neler kazanmas─▒n─▒ bekl: Mezun olup sahaya ├º─▒kt─▒─ƒ─▒nda nelerle kar┼ƒ─▒la┼ƒabilece─ƒi konusunda ├╢n bilgi edinmesi
+     Ka├º mentee ile g├╢r├╝┼ƒmeyi tercih edersiniz? / How many mentee: 2
+
+   MENTOR 2:
+     Zaman damgas─▒: 2026-02-03 18:11:35
+     Ad- Soyad─▒ / Name - Surname: Asaf Kirazo─ƒlu
+     Email: asaf.kirazoglu@gmail.com
+     Telefon numaras─▒ / Phone number: 5308207583.0
+     Linkedin profil linkinizi ekleyiniz/Please add your Linkedin: linkedin.com/in/asafkirazoglu
+     ┼₧u an ya┼ƒad─▒─ƒ─▒n─▒z ┼ƒehir-├╝lke //The city-country you live in: ─░stanbul, T├╝rkiye
+     ┼₧EH─░R-├£LKE: ─░stanbul-T├╝rkiye
+     ─░lgi alanlar─▒n─▒z, hobileriniz ve sosyal faaliyetleriniz ( ├£n: Otomobiller, basketbol ve F1
+     Ko├º ├£niversitesi mezuniyet y─▒l─▒n─▒z/ Ko├º University Graduatio: 2012
+     Ko├º ├£niversitesi'nden mezun oldu─ƒunuz b├╢l├╝m(ler) ve derece(l: MSc. In Finance
+     Ko├º ├£niversitesi'nden mezuniyetiniz sonras─▒ ald─▒─ƒ─▒n─▒z akadem: EMCC - Practionar Coach
+     ┼₧u an ├ºal─▒┼ƒt─▒─ƒ─▒n─▒z kurum / Your current institution: Nu People
+     ┼₧u an yer ald─▒─ƒ─▒n─▒z sekt├╢r / Your current sector: FMCG (Fast-Moving Consumer Goods)
+     ┼₧u an ├ºal─▒┼ƒt─▒─ƒ─▒n─▒z pozisyon / Your current position: Advisory to Board / Managing Consultant
+     Daha ├╢nce hangi sekt├╢r ve alanlarda ├ºal─▒┼ƒt─▒n─▒z? / In which s: Hizmet Sekt├╢r├╝, Sanayi, Turizm, TV & Prod├╝ksiyon, Perakende ve H─▒zl─▒ T├╝ketim
+     Profesyonel uzmanl─▒k alanlar─▒n─▒z─▒ belirtiniz. / Please indic: Career Coaching & Career Counseling, Change Management, Corporate Finance, Corporate Strategy, Digit
+     Daha ├╢nce mentorluk yapt─▒n─▒z m─▒?/ Have you been a mentor bef: Evet
+     Hangi program veya programlarda mentorluk g├╢revi ├╝stlendiniz: Ko├º ├£niversitesi Mentor Mezun A─ƒ─▒/ Ko├º University Alumni Mentorship Network, Dar├╝┼ƒafaka Vakf─▒
+     Bu programlardaki mentorluk deneyiminizi k─▒saca anlat─▒n─▒z/ B: Tecr├╝belerimi aktar─▒rken, yeni jenarasyondan ├╢─ƒrenebilmek ┼ƒahane. Onlar─▒n geli┼ƒimine e┼ƒlik edebilmek
+     Neden mentor olmak istiyorsunuz? Bu programa neler katabilec: Kazanm─▒┼ƒ oldu─ƒum bilgi, tecr├╝be birikimimi merak edenlere aktarabilmek benim i├ºin ├╢nemli.
+     E┼ƒle┼ƒece─ƒiniz menteenin bu programdan neler kazanmas─▒n─▒ bekl: Kendi pencerelerinden, benim oldu─ƒum zamana yolculuk yaparken kendi merak─▒ ile anlamaya ├ºal─▒┼ƒmas─▒ ve
+     Ka├º mentee ile g├╢r├╝┼ƒmeyi tercih edersiniz? / How many mentee: 2
+     Eklemek istediklerinizi belirtiniz/ Is there anything you wo: Ge├ºti─ƒimiz y─▒l yapm─▒┼ƒ oldu─ƒum mentorluk ile bende b├╝y├╝k deneyim kazand─▒m. ┼₧imdide ├ºok heyecanl─▒y─▒m; 
+
+   MENTOR 3:
+     Zaman damgas─▒: 2026-02-11 11:09:29
+     Ad- Soyad─▒ / Name - Surname: Eser Sayg─▒n
+     Email: ssaygin21@ku.edu.tr
+     Telefon numaras─▒ / Phone number: 5414875898.0
+     Linkedin profil linkinizi ekleyiniz/Please add your Linkedin: https://www.linkedin.com/in/esersaygin/
+     ┼₧u an ya┼ƒad─▒─ƒ─▒n─▒z ┼ƒehir-├╝lke //The city-country you live in: Ankara
+     ┼₧EH─░R-├£LKE: Ankara-T├╝rkiye
+     ─░lgi alanlar─▒n─▒z, hobileriniz ve sosyal faaliyetleriniz ( ├£n: AI, data, gaming
+     Ko├º ├£niversitesi mezuniyet y─▒l─▒n─▒z/ Ko├º University Graduatio: 2022
+     Ko├º ├£niversitesi'nden mezun oldu─ƒunuz b├╢l├╝m(ler) ve derece(l: Data Science
+     Ko├º ├£niversitesi'nden mezuniyetiniz sonras─▒ ald─▒─ƒ─▒n─▒z akadem: -
+     ┼₧u an ├ºal─▒┼ƒt─▒─ƒ─▒n─▒z kurum / Your current institution: TRT
+     ┼₧u an yer ald─▒─ƒ─▒n─▒z sekt├╢r / Your current sector: Media, Broadcasting & Publishing
+     ┼₧u an ├ºal─▒┼ƒt─▒─ƒ─▒n─▒z pozisyon / Your current position: Senior Strategy Specialist
+     Daha ├╢nce hangi sekt├╢r ve alanlarda ├ºal─▒┼ƒt─▒n─▒z? / In which s: Finance & Banking (T. ─░┼ƒ Bankas─▒)
+     Profesyonel uzmanl─▒k alanlar─▒n─▒z─▒ belirtiniz. / Please indic: Agile & Scrum Methodologies, Artificial Intelligence (AI), Brand Management & Brand Strategy, Busine
+     Daha ├╢nce mentorluk yapt─▒n─▒z m─▒?/ Have you been a mentor bef: Evet
+     Hangi program veya programlarda mentorluk g├╢revi ├╝stlendiniz: Ko├º ├£niversitesi Mentor Mezun A─ƒ─▒/ Ko├º University Alumni Mentorship Network
+     Bu programlardaki mentorluk deneyiminizi k─▒saca anlat─▒n─▒z/ B: ─░ki d├╢nem mentorluk yapt─▒m. ├û─ƒrencilerle ileti┼ƒimimiz gayet g├╝zeldi, fakat s─▒navlar ve tatiller nede
+     Neden mentor olmak istiyorsunuz? Bu programa neler katabilec: 2 senedir bu programday─▒m, tecr├╝belerimi payla┼ƒmay─▒ seviyorum.
+     E┼ƒle┼ƒece─ƒiniz menteenin bu programdan neler kazanmas─▒n─▒ bekl: Gelece─ƒe dair belirsizlikleri ortadan kald─▒rmak istiyorum.
+     Ka├º mentee ile g├╢r├╝┼ƒmeyi tercih edersiniz? / How many mentee: 2
+     Eklemek istediklerinizi belirtiniz/ Is there anything you wo: Program─▒ devam ettirdi─ƒiniz i├ºin te┼ƒekk├╝r ederim.
+
+
+====================================================================================================
+ANALYSIS COMPLETE
+====================================================================================================

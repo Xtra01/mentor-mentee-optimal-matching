@@ -1,0 +1,34 @@
+{
+  "Mentor Mezun Ağı 2026 Başvurular.xlsx": {
+    "Mentee": {
+      "rows": 308,
+      "cols": 25,
+      "columns": [
+        "Timestamp",
+        "Adınız -Soyadınız / Name-Surname",
+        "ID Numaranız/ ID No",
+        "E-posta / Email",
+        "Telefon Numarası / Phone Number",
+        "Linkedin profil linkinizi ekleyiniz/ Please add your Linkedin profile",
+        "Şu anda yaşadığınız şehir ve ülke /The city and country you currently reside in",
+        "Bölümünüz/Your Major",
+        "Sınıfınız / Your Grade",
+        "İş ve staj deneyimleriniz ( Kurum, sektör, departman, pozisyon, tarih vb.) / Your work and internship experiences (institution, sector, department, position, date, etc.)",
+        "Kariyer Hedefleriniz ( Akademi - İş Dünyası, Kurum, Sektör, Pozisyon vb.) / Your Career Goals (Academy - Business World, Institution, Sector, Position etc.)",
+        "İlgi alanlarınız ve hobileriniz ( Aktif olduğunuz öğrenci kulüplerini bu alanda belirtiniz.) / Your interests and hobbies (Please indicate your active student clubs in this area.)",
+        "Nasıl bir mezun ile eşleşmek istersiniz? ( Bölüm, sektör, kurum, yaşadığı şehir-ülke, kulüp vb.) / What kind of alumni would you like to match? (Department, sector, institution, city-country, club, etc.)",
+        "Bu programa neden katılmak istiyorsunuz? Programın size neler katabileceğini düşünüyorsunuz? / Why do you want to participate in this program? What do you think the program can add to you?",
+        "Hangi konularda destek almak istiyorsunuz? / Which topics do you want to receive support?",
+        "Bölümü - akademik geçmişi / Academic background / Field of study]",
+        " [Sektörü - alanı / Industry - Field of expertise]",
+        "[Kurumu - şirketi - üniversitesi / Organization - Company - University]",
+        "Bir mentor ile eşleştirilirken aşağıdaki kriterlerin sizin için ne kadar önemli olduğunu derecelendiriniz. / When being matched with a mentor, please rate how important the following criteria are for you. []",
+        " [Şehir ve/veya ülkesi / City and/or country of residence]",
+        "Bir mentor ile eşleştirilirken aşağıdaki kriterlerin sizin için ne kadar önemli olduğunu derecelendiriniz. / When being matched with a mentor, please rate how important the following criteria are for you. [].1",
+        "[İlgi alanları / Areas of interest]",
+        "Mentor–mentee eşleştirme sürecine dair tercihlerinizi aşağıda belirtiniz.\nMentor havuzumuz sınırlıdır ve tüm kriterleriniz dikkate alınarak en uygun eşleşmeyi yapmaya gayret ediyoruz. Ancak bazı durumlarda, tüm beklentileri birebir karşılayan bir eşleşme mümkün olmayabilir. Biz, her mentor–mentee eşleşmesinin karşılıklı öğrenme için değerli olduğuna inanıyoruz.\nBöyle bir durumda tercihiniz aşağıdakilerden hangisi olur?\nPlease indicate your preference regarding the mentor–mentee matching process.\nOur mentor pool is limited, and we strive to create the best possible matches by considering all stated criteria. However, in some cases, it may not be possible to achieve a match that perfectly meets all expectations. We believe that every mentor–mentee relationship offers opportunities for mutual learning.\nIn such a situation, which option best reflects your preference?",
+        "Eski Mentor",
+        "Mentor"
+      ],
+      "dtypes": {
+        "Timestamp": 
